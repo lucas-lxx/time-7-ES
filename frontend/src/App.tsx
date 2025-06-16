@@ -1,10 +1,12 @@
+import TelaAutenticacao from './components/TelaAutenticacao';
+import Cadastro from './components/Cadastro';
+
 function App() {
   return (
     <>
-      <div className='bg-sky-600 text-3xl font-bold underline'>
-        Esqueleto do projeto
-      </div>
-      <div>oi</div>
+      <TelaAutenticacao>
+        <Cadastro />
+      </TelaAutenticacao>
     </>
   );
 }
