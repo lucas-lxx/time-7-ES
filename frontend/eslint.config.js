@@ -6,17 +6,30 @@ import { defineConfig } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default defineConfig([
+  // Bloco base
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     plugins: { js },
     extends: ['js/recommended'],
-  },
-  {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     languageOptions: { globals: globals.browser },
   },
+
+  // Configurações recomendadas
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
 
+  // ⚠️ Bloco de regras personalizadas – DEVE vir depois
+  {
+    rules: {
+      'react/react-in-jsx-scope': 'off',
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+
+  // Prettier no final
   eslintConfigPrettier,
 ]);
