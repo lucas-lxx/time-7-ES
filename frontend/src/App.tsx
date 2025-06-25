@@ -1,13 +1,11 @@
-import TelaAutenticacao from './components/TelaAutenticacao';
-import Cadastro from './components/Cadastro';
+import { BrowserRouter } from 'react-router-dom';
+import Rotas from './routes/Rotas';
 
 function App() {
   return (
-    <>
-      <TelaAutenticacao>
-        <Cadastro />
-      </TelaAutenticacao>
-    </>
+    <BrowserRouter>
+      <Rotas />
+    </BrowserRouter>
   );
 }
 
