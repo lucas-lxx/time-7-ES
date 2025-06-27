@@ -21,8 +21,8 @@ export class UserService {
     });
   }
 
-  findAll() {
-    return this.prismaService.user.findMany({
+  async findAll() {
+    return await this.prismaService.user.findMany({
       select: {
         name: true,
         email: true,
@@ -42,11 +42,11 @@ export class UserService {
     });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} user`;
   }
 }
