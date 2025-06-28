@@ -4,6 +4,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { PrismaService } from "src/shared/prisma/prisma.service";
 import { hash } from "bcrypt";
 import { SALT_ROUNDS } from "src/shared/constants";
+import { UserWithoutPassword } from "./entities/user.entity";
 
 @Injectable()
 export class UserService {
@@ -12,38 +13,27 @@ export class UserService {
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = await hash(createUserDto.password, SALT_ROUNDS);
     return this.prismaService.user.create({
-      data: createUserDto,
-      select: {
-        name: true,
-        email: true,
-        created_at: true
-      }
+      select: UserWithoutPassword,
+      data: createUserDto
     });
   }
 
   async findAll() {
     return await this.prismaService.user.findMany({
-      select: {
-        name: true,
-        email: true,
-        created_at: true
-      }
+      select: UserWithoutPassword
     });
   }
 
   async findByEmail(email: string) {
     return await this.prismaService.user.findUnique({
-      select: {
-        name: true,
-        email: true,
-        created_at: true
-      },
+      select: UserWithoutPassword,
       where: { email }
     });
   }
 
   async update(email: string, updateUserDto: UpdateUserDto) {
     return await this.prismaService.user.update({
+      select: UserWithoutPassword,
       data: updateUserDto,
       where: { email }
     });
@@ -51,11 +41,7 @@ export class UserService {
 
   async removeByEmail(email: string) {
     return await this.prismaService.user.delete({
-      select: {
-        name: true,
-        email: true,
-        created_at: true
-      },
+      select: UserWithoutPassword,
       where: { email }
     });
   }
