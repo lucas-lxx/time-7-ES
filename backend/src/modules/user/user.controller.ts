@@ -30,9 +30,9 @@ export class UserController {
   async findByEmail(@Param("email") email: string) {
     const user = await this.userService.findByEmail(email);
     if (!user) {
-      throw new NotFoundException({ error: "user not found" });
+      throw new NotFoundException("user not found");
     }
-    return;
+    return user;
   }
 
   @Patch(":id")
