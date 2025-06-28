@@ -36,7 +36,7 @@ export class UserController {
   async findByEmail(@Param("email") email: string) {
     const user = await this.userService.findByEmail(email);
     if (!user) {
-      throw new NotFoundException("user not found");
+      throw new NotFoundException("User not found");
     }
     return user;
   }
@@ -50,7 +50,7 @@ export class UserController {
       return await this.userService.update(email, updateUserDto);
     } catch (err) {
       if (err instanceof PrismaClientValidationError) {
-        throw new BadRequestException("invalid options for update");
+        throw new BadRequestException("Invalid options for update");
       }
       throw new InternalServerErrorException();
     }

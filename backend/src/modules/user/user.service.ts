@@ -38,16 +38,14 @@ export class UserService {
         email: true,
         created_at: true
       },
-      where: { email: email }
+      where: { email }
     });
   }
 
   async update(email: string, updateUserDto: UpdateUserDto) {
     return await this.prismaService.user.update({
-      where: {
-        email
-      },
-      data: updateUserDto
+      data: updateUserDto,
+      where: { email }
     });
   }
 
