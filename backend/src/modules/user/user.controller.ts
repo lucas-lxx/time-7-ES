@@ -13,7 +13,10 @@ import {
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { PrismaClientValidationError } from "@prisma/client/runtime/library";
+import {
+  PrismaClientKnownRequestError,
+  PrismaClientValidationError
+} from "@prisma/client/runtime/library";
 
 @Controller("user")
 export class UserController {
@@ -53,8 +56,15 @@ export class UserController {
     }
   }
 
-  @Delete(":id")
-  async remove(@Param("id") id: string) {
-    return await this.userService.remove(+id);
+  @Delete(":email")
+  async removeByEmail(@Param("email") email: string) {
+    try {
+      return await this.userService.removeByEmail(email);
+    } catch (err) {
+      if (err instanceof PrismaClientKnownRequestError) {
+        throw new NotFoundException("User not found");
+      }
+      throw new InternalServerErrorException();
+    }
   }
 }

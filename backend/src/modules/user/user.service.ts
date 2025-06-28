@@ -51,7 +51,14 @@ export class UserService {
     });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} user`;
+  async removeByEmail(email: string) {
+    return await this.prismaService.user.delete({
+      select: {
+        name: true,
+        email: true,
+        created_at: true
+      },
+      where: { email }
+    });
   }
 }
