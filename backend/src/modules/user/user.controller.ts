@@ -6,11 +6,14 @@ import {
   Patch,
   Param,
   Delete,
-  NotFoundException
+  NotFoundException,
+  InternalServerErrorException,
+  BadRequestException
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import { PrismaClientValidationError } from "@prisma/client/runtime/library";
 
 @Controller("user")
 export class UserController {
@@ -35,9 +38,19 @@ export class UserController {
     return user;
   }
 
-  @Patch(":id")
-  async update(@Param("id") id: string, @Body() updateUserDto: UpdateUserDto) {
-    return await this.userService.update(+id, updateUserDto);
+  @Patch(":email")
+  async update(
+    @Param("email") email: string,
+    @Body() updateUserDto: UpdateUserDto
+  ) {
+    try {
+      return await this.userService.update(email, updateUserDto);
+    } catch (err) {
+      if (err instanceof PrismaClientValidationError) {
+        throw new BadRequestException("invalid options for update");
+      }
+      throw new InternalServerErrorException();
+    }
   }
 
   @Delete(":id")
