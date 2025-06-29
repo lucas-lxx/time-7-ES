@@ -14,8 +14,17 @@ datasource db {
 }
 
 model User {
-  email      String   @id @unique
-  name       String
-  password   String
-  created_at DateTime @default(now())
+  email        String         @id @unique
+  name         String
+  password     String
+  created_at   DateTime       @default(now())
+  RefreshToken RefreshToken[]
+}
+
+model RefreshToken {
+  id         String   @id @unique
+  issued_at  DateTime @default(now())
+  expires_at DateTime
+  user       User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userEmail  String
 }
