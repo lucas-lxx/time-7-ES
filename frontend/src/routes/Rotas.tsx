@@ -1,9 +1,12 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 import Cadastro from '../autenticacao/components/Cadastro';
 import Login from '../autenticacao/components/Login';
 import Recuperacao from '../autenticacao/components/Recuperacao';
 import AppLayout from '../autenticacao/index';
+import AppNavigation from '../area-logada/AppNavigation';
+
+import Teste from '../area-logada/pages/Teste';
 
 export default function Rotas() {
   return (
@@ -13,6 +16,11 @@ export default function Rotas() {
           <Route path='/login' element={<Login />} />
           <Route path='/recuperacao' element={<Recuperacao />} />
           <Route path='/' element={<Cadastro />} />
+          <Route path='*' element={<Navigate to='/login' replace />} />
+        </Route>
+        <Route element={<AppNavigation />}>
+          <Route path='/entrada' element={<Teste />} />
+          <Route path='/gosto' element={<Recuperacao />} />
         </Route>
       </Routes>
     </>
