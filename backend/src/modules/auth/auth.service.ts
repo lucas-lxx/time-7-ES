@@ -6,6 +6,7 @@ import { SignInDto } from "./dto/sign-in.dto";
 import { UserService } from "../user/user.service";
 import { PrismaService } from "src/shared/prisma/prisma.service";
 import { User } from "@prisma/client";
+import { RefreshTokenDto } from "./dto/refresh-token.dto";
 
 @Injectable()
 export class AuthService {
@@ -32,12 +33,41 @@ export class AuthService {
 
     const [accessToken, refreshToken] = await Promise.all([
       this.generateAccessToken({ userId: user.email }),
-      this.generateRefreshToken(user)
+      this.generateRefreshToken(user.email)
     ]);
 
     return {
       accessToken,
       refreshToken: refreshToken.id
+    };
+  }
+
+  async refreshToken(refreshTokenDto: RefreshTokenDto) {
+    const { refreshToken: refreshTokenId } = refreshTokenDto;
+
+    const refreshToken = await this.prismaService.refreshToken.findUnique({
+      where: { id: refreshTokenId },
+      include: { user: true }
+    });
+
+    if (!refreshToken) {
+      throw new UnauthorizedException("Invalid refresh token");
+    }
+
+    if (Date.now() > refreshToken.expires_at.getTime()) {
+      await this.prismaService.refreshToken.delete({
+        where: { id: refreshToken.id }
+      });
+
+      throw new UnauthorizedException("Invalid refresh token");
+    }
+
+    const accessToken = await this.generateAccessToken({
+      userId: refreshToken.userEmail
+    });
+
+    return {
+      accessToken
     };
   }
 
@@ -47,7 +77,7 @@ export class AuthService {
     });
   }
 
-  private async generateRefreshToken(user: User) {
+  private async generateRefreshToken(userEmail: string) {
     const expiresAt = new Date();
 
     expiresAt.setDate(expiresAt.getDate() + EXP_TIME_IN_DAYS);
@@ -55,7 +85,7 @@ export class AuthService {
     const refreshToken = await this.prismaService.refreshToken.create({
       data: {
         expires_at: expiresAt,
-        userEmail: user.email
+        userEmail: userEmail
       }
     });
 
