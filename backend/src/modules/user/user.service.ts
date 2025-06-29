@@ -24,9 +24,10 @@ export class UserService {
     });
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string, password: boolean = false) {
+    const user = { ...UserWithoutPassword, password: password };
     return await this.prismaService.user.findUnique({
-      select: UserWithoutPassword,
+      select: user,
       where: { email }
     });
   }
