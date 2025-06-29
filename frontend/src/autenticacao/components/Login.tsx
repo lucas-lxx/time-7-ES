@@ -14,7 +14,7 @@ export default function Login() {
     formState,
   } = useForm<IFormData>();
 
-  const haSidebarndleSubmit = hookFormHandleSubmit((data) => {
+  const handleSubmit = hookFormHandleSubmit((data) => {
     console.log('Formulário enviado com os dados:');
     console.log({ data });
     // Aqui você pode adicionar a lógica para enviar os dados do formulário
