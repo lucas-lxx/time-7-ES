@@ -17,12 +17,14 @@ import {
   PrismaClientKnownRequestError,
   PrismaClientValidationError
 } from "@prisma/client/runtime/library";
+import { IsPublic } from "src/shared/decorators/isPublic";
 
 @Controller("user")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @IsPublic()
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
   }
