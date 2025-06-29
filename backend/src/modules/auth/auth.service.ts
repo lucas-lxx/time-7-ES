@@ -5,7 +5,6 @@ import { EXP_TIME_IN_DAYS } from "src/shared/constants";
 import { SignInDto } from "./dto/sign-in.dto";
 import { UserService } from "../user/user.service";
 import { PrismaService } from "src/shared/prisma/prisma.service";
-import { User } from "@prisma/client";
 import { RefreshTokenDto } from "./dto/refresh-token.dto";
 
 @Injectable()
@@ -81,6 +80,12 @@ export class AuthService {
     const expiresAt = new Date();
 
     expiresAt.setDate(expiresAt.getDate() + EXP_TIME_IN_DAYS);
+
+    await this.prismaService.refreshToken.deleteMany({
+      where: {
+        userEmail
+      }
+    });
 
     const refreshToken = await this.prismaService.refreshToken.create({
       data: {
