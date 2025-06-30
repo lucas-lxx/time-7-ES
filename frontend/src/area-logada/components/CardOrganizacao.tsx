@@ -1,6 +1,5 @@
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -21,21 +20,21 @@ export default function CardOrganizacao({
   date,
 }: CardProps) {
   return (
-    <Card className='w-full max-w-sm h-64 bg-white shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between'>
-      <CardHeader>
-        <CardTitle className='text-xl text-red-500'>{title}</CardTitle>
-        <CardDescription className='text-sm text-gray-600'>
-          {description}
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className='flex items-center justify-center'>
+    <Card
+      className='w-60 h-86 {/*bg-blue-900*/} shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-sm pt-2 cursor-pointer'
+      onClick={() => console.log('Card clicked')}
+    >
+      <CardContent className=''>
         <img
-          src='/placeholder.png'
+          src='../../../cardImage.svg'
           alt='Imagem da organização'
-          className='w-24 h-24 object-cover rounded-full'
+          className=' w-[100%] object-cover  rounded-xs '
         />
       </CardContent>
+      <CardHeader className=' my-0.5'>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
 
       <CardFooter className='text-xs text-gray-500'>
         Criado em {date}

@@ -19,7 +19,7 @@ export default function Rotas() {
           <Route path='*' element={<Navigate to='/login' replace />} />
         </Route>
         <Route element={<AppNavigation />}>
-          <Route path='/entrada' element={<Teste />} />
+          <Route path='/organization' element={<Teste />} />
           <Route path='/gosto' element={<Recuperacao />} />
         </Route>
       </Routes>
