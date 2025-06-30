@@ -14,11 +14,13 @@ datasource db {
 }
 
 model User {
-  email        String         @id @unique
-  name         String
-  password     String
-  created_at   DateTime       @default(now())
-  RefreshToken RefreshToken[]
+  email         String          @id @unique
+  name          String
+  password      String
+  created_at    DateTime        @default(now())
+  RefreshToken  RefreshToken[]
+  Expense       Expense[]
+  PaymentMethod PaymentMethod[]
 }
 
 model RefreshToken {
@@ -27,4 +29,35 @@ model RefreshToken {
   expires_at DateTime
   user       User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   userEmail  String
+}
+
+model Expense {
+  id              String        @id @unique @default(uuid())
+  name            String
+  value           Decimal
+  description     String?
+  date            DateTime      @default(now())
+  user            User          @relation(fields: [userEmail], references: [email])
+  PaymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  ExpenseClass    ExpenseClass  @relation(fields: [expenseClassId], references: [id])
+  userEmail       String
+  paymentMethodId String
+  expenseClassId  String
+}
+
+model PaymentMethod {
+  id         String    @id @unique @default(uuid())
+  type       String
+  label      String
+  last4      String?
+  created_at DateTime  @default(now())
+  user       User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userEmail  String
+  Expense    Expense[]
+}
+
+model ExpenseClass {
+  id      String    @id @unique @default(uuid())
+  name    String
+  Expense Expense[]
 }
