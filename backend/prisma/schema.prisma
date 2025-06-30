@@ -14,13 +14,14 @@ datasource db {
 }
 
 model User {
-  email         String          @id @unique
-  name          String
-  password      String
-  created_at    DateTime        @default(now())
-  RefreshToken  RefreshToken[]
-  Expense       Expense[]
-  PaymentMethod PaymentMethod[]
+  email          String          @id @unique
+  name           String
+  password       String
+  created_at     DateTime        @default(now())
+  RefreshToken   RefreshToken[]
+  Expense        Expense[]
+  PaymentMethod  PaymentMethod[]
+  ExpenseClasses ExpenseClass[]
 }
 
 model RefreshToken {
@@ -57,7 +58,9 @@ model PaymentMethod {
 }
 
 model ExpenseClass {
-  id      String    @id @unique @default(uuid())
-  name    String
-  Expense Expense[]
+  id        String    @id @unique @default(uuid())
+  name      String
+  Expense   Expense[]
+  User      User?     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userEmail String?
 }
