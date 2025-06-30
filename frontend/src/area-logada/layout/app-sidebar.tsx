@@ -24,32 +24,32 @@ import {
 const items = [
   {
     title: 'Início',
-    endpoint: '#',
+    endpoint: 'organization',
     icon: House,
   },
   {
     title: 'Relatórios',
-    endpoint: '#',
+    endpoint: 'gosto',
     icon: ClipboardList,
   },
   {
     title: 'Gráficos',
-    endpoint: '#',
+    endpoint: 'gosto',
     icon: ChartLine,
   },
   {
     title: 'Categorias',
-    endpoint: '#',
+    endpoint: 'gosto',
     icon: ShieldQuestionMark,
   },
   {
     title: 'Configurações',
-    endpoint: '#',
+    endpoint: 'gosto',
     icon: Bolt,
   },
   {
     title: 'Sobre',
-    endpoint: '#',
+    endpoint: 'gosto',
     icon: CircleAlert,
   },
 ];
@@ -65,10 +65,10 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.endpoint}>
+                    <Link to={item.endpoint}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
