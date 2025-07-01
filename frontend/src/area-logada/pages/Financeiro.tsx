@@ -1,8 +1,6 @@
-import { mockCardGasto as mockData } from '@/mocks/mockCardGasto';
-import CardGasto from '../components/CardGasto';
-
 import SheetInserirCompras from '../components/SheetInserirCompras';
 import SheetButton from '../components/SheetButton';
+import TabelaGastos from '../components/TabelaGastos';
 
 export default function Financeiro() {
   return (
@@ -16,18 +14,8 @@ export default function Financeiro() {
           sheetContent={<SheetInserirCompras />}
         />
       </div>
-      <div className='flex flex-wrap gap-2 px-4 '>
-        {mockData.map((gasto, index) => (
-          <CardGasto
-            key={index}
-            title={gasto.title}
-            description={gasto.description}
-            date={gasto.date}
-            pagamento={gasto.pagamento}
-            valor={gasto.valor}
-          />
-        ))}
-      </div>
+
+      <TabelaGastos />
     </div>
   );
 }
