@@ -24,13 +24,18 @@ import {
 const items = [
   {
     title: 'Início',
-    endpoint: 'organization',
+    endpoint: 'gosto',
     icon: House,
   },
   {
-    title: 'Relatórios',
-    endpoint: 'gosto',
+    title: 'Organizações',
+    endpoint: 'organization',
     icon: ClipboardList,
+  },
+  {
+    title: 'TEMPORÁRIO',
+    endpoint: 'financeiro',
+    icon: ShieldQuestionMark,
   },
   {
     title: 'Gráficos',

@@ -1,11 +1,8 @@
-import { Sheet, SheetTrigger } from '@/components/ui/sheet';
-
 import { mockCardOrganization as mockData } from '@/mocks/MockCardOrganization';
 
-import { CirclePlus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import CardOrganizacao from '../components/CardOrganizacao';
 import SheetOrganizacao from '../components/SheetOrganizacao';
+import SheetButton from '../components/SheetButton';
 
 export default function Teste() {
   return (
@@ -14,18 +11,10 @@ export default function Teste() {
         <h1 className='font-roboto font-semibold pl-7 text-lg sm:text-2xl md:text-3xl lg:text-4xl'>
           Minhas Organizações
         </h1>
-        <Sheet>
-          <Button
-            asChild
-            className='flex items-center mr-7 max-sm:fixed max-sm:bottom-8 max-sm:inset-x-8 max-sm:m-auto'
-          >
-            <SheetTrigger>
-              <CirclePlus />
-              Criar Organização
-            </SheetTrigger>
-          </Button>
-          <SheetOrganizacao />
-        </Sheet>
+        <SheetButton
+          nomeEvento='Criar Organização'
+          sheetContent={<SheetOrganizacao />}
+        />
       </div>
       <div className='flex flex-wrap px-4 gap-x-4 gap-y-6 max-sm:gap-y-1 max-sm:h-[85%] h-[90%] '>
         {mockData.slice(0, 5).map((org) => (

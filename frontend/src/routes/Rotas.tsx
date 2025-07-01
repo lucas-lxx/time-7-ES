@@ -7,6 +7,7 @@ import AppLayout from '../autenticacao/index';
 import AppNavigation from '../area-logada/AppNavigation';
 
 import Teste from '../area-logada/pages/Teste';
+import Financeiro from '../area-logada/pages/Financeiro';
 
 export default function Rotas() {
   return (
@@ -21,6 +22,7 @@ export default function Rotas() {
         <Route element={<AppNavigation />}>
           <Route path='/organization' element={<Teste />} />
           <Route path='/gosto' element={<Recuperacao />} />
+          <Route path='/financeiro' element={<Financeiro />} />
         </Route>
       </Routes>
     </>
