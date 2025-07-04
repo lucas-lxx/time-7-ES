@@ -14,7 +14,8 @@ datasource db {
 }
 
 model User {
-  email          String          @id @unique
+  id             String          @id @unique @default(uuid())
+  email          String          @unique
   name           String
   password       String
   created_at     DateTime        @default(now())
@@ -28,8 +29,8 @@ model RefreshToken {
   id         String   @id @unique @default(uuid())
   issued_at  DateTime @default(now())
   expires_at DateTime
-  user       User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-  userEmail  String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
 }
 
 model Expense {
@@ -38,12 +39,12 @@ model Expense {
   value           Decimal
   description     String?
   date            DateTime      @default(now())
-  user            User          @relation(fields: [userEmail], references: [email])
   PaymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
   ExpenseClass    ExpenseClass  @relation(fields: [expenseClassId], references: [id])
-  userEmail       String
   paymentMethodId String
   expenseClassId  String
+  User            User          @relation(fields: [userId], references: [id])
+  userId          String
 }
 
 model PaymentMethod {
@@ -52,15 +53,15 @@ model PaymentMethod {
   label      String
   last4      String?
   created_at DateTime  @default(now())
-  user       User      @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-  userEmail  String
   Expense    Expense[]
+  User       User      @relation(fields: [userId], references: [id])
+  userId     String
 }
 
 model ExpenseClass {
-  id        String    @id @unique @default(uuid())
-  name      String
-  Expense   Expense[]
-  User      User?     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-  userEmail String?
+  id      String    @id @unique @default(uuid())
+  name    String
+  Expense Expense[]
+  User    User      @relation(fields: [userId], references: [id])
+  userId  String
 }

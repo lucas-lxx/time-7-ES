@@ -31,8 +31,8 @@ export class AuthService {
     }
 
     const [accessToken, refreshToken] = await Promise.all([
-      this.generateAccessToken({ userId: user.email }),
-      this.generateRefreshToken(user.email)
+      this.generateAccessToken({ userId: user.id }),
+      this.generateRefreshToken(user.id)
     ]);
 
     return {
@@ -62,7 +62,7 @@ export class AuthService {
     }
 
     const accessToken = await this.generateAccessToken({
-      userId: refreshToken.userEmail
+      userId: refreshToken.userId
     });
 
     return {
@@ -76,22 +76,17 @@ export class AuthService {
     });
   }
 
-  private async generateRefreshToken(userEmail: string) {
+  private async generateRefreshToken(userId: string) {
     const expiresAt = new Date();
 
     expiresAt.setDate(expiresAt.getDate() + EXP_TIME_IN_DAYS);
 
     await this.prismaService.refreshToken.deleteMany({
-      where: {
-        userEmail
-      }
+      where: { userId }
     });
 
     const refreshToken = await this.prismaService.refreshToken.create({
-      data: {
-        expires_at: expiresAt,
-        userEmail: userEmail
-      }
+      data: { expires_at: expiresAt, userId }
     });
 
     return refreshToken;
