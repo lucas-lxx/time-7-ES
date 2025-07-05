@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
 
 interface IFormData {
   name: string;
@@ -62,14 +61,6 @@ export default function Cadastro() {
               },
             })}
           />
-
-          <ErrorMessage
-            errors={formState.errors}
-            name='name'
-            render={({ message }) => (
-              <small className='text-red-400 block'>{message}</small>
-            )}
-          />
         </div>
         <div className='flex flex-col items-start w-full'>
           <label htmlFor='password'>Senha</label>
@@ -83,13 +74,6 @@ export default function Cadastro() {
                 message: 'O campo Senha é obrigatório',
               },
             })}
-          />
-          <ErrorMessage
-            errors={formState.errors}
-            name='password'
-            render={({ message }) => (
-              <small className='text-red-400 block'>{message}</small>
-            )}
           />
         </div>
 

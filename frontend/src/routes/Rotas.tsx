@@ -1,7 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 import Cadastro from '../autenticacao/components/Cadastro';
-import Login from '../autenticacao/components/Login';
+import Login from '../autenticacao/login';
 import Recuperacao from '../autenticacao/components/Recuperacao';
 import AppLayout from '../autenticacao/index';
 import AppNavigation from '../area-logada/AppNavigation';
