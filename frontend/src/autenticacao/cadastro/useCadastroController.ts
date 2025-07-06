@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { authService } from '@/services/authService';
 
 const schema = z.object({
   name: z.string().nonempty('Nome é obrigatório'),
@@ -25,8 +26,9 @@ export function useCadastroController() {
     resolver: zodResolver(schema),
   });
 
-  const handleSubmit = hookFormHandleSubmit((data) => {
-    console.log('Cadastro realizado:', data);
+  const handleSubmit = hookFormHandleSubmit(async (data) => {
+    const { accessToken } = await authService.signup(data);
+    console.log({ accessToken });
   });
 
   return { handleSubmit, register, errors };
