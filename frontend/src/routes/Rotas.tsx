@@ -1,8 +1,9 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 
-import Cadastro from '../autenticacao/components/Cadastro';
+import Cadastro from '../autenticacao/cadastro';
 import Login from '../autenticacao/login';
-import Recuperacao from '../autenticacao/components/Recuperacao';
+import Coringa from '../autenticacao/components/Coringa';
+import Recuperacao from '../autenticacao/recuperacao';
 import AppLayout from '../autenticacao/index';
 import AppNavigation from '../area-logada/AppNavigation';
 
@@ -21,7 +22,7 @@ export default function Rotas() {
         </Route>
         <Route element={<AppNavigation />}>
           <Route path='/organization' element={<Teste />} />
-          <Route path='/gosto' element={<Recuperacao />} />
+          <Route path='/gosto' element={<Coringa />} />
           <Route path='/financeiro' element={<Financeiro />} />
         </Route>
       </Routes>

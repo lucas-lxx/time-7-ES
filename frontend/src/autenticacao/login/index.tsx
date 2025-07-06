@@ -2,25 +2,27 @@ import { useLoginController } from './useLoginController';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { Link } from 'react-router-dom';
+import { AuthContainer } from '../components/AuthContainer';
 
 export default function Login() {
   const { handleSubmit, register, errors } = useLoginController();
 
   return (
-    <div className='flex flex-col items-center bg-white px-11 pt-8 rounded-md h-[25rem] max-w-105'>
-      <h1 className='text-cor-principal text-4xl font-normal font-roboto'>
-        Acesse sua Conta
-      </h1>
+    <AuthContainer titulo='Acesse sua Conta'>
+      <form onSubmit={handleSubmit} className=' flex flex-col gap-4 '>
+        <Input
+          type='email'
+          placeholder='E-mail'
+          {...register('email')}
+          error={errors.email?.message}
+        />
 
-      <form onSubmit={handleSubmit} className='mt-[60px] flex flex-col gap-4 '>
-        <Input type='email' placeholder='E-mail' {...register('email')} />
-        {errors.email && (
-          <span className='text-sm text-red-500'>{errors.email.message}</span>
-        )}
-        <Input type='password' placeholder='Senha' {...register('password')} />
-        {errors.email && (
-          <span className='text-sm text-red-500'>{errors.email.message}</span>
-        )}
+        <Input
+          type='password'
+          placeholder='Senha'
+          {...register('password')}
+          error={errors.password?.message}
+        />
 
         <Button className='mt-2' type='submit'>
           Entrar
@@ -38,6 +40,6 @@ export default function Login() {
           </Link>
         </p>
       </div>
-    </div>
+    </AuthContainer>
   );
 }
