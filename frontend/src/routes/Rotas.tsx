@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, BrowserRouter } from 'react-router-dom';
 
 import Cadastro from '../autenticacao/cadastro';
 import Login from '../autenticacao/login';
@@ -12,7 +12,7 @@ import Financeiro from '../area-logada/pages/Financeiro';
 
 export default function Rotas() {
   return (
-    <>
+    <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
           <Route path='/login' element={<Login />} />
@@ -26,6 +26,6 @@ export default function Rotas() {
           <Route path='/financeiro' element={<Financeiro />} />
         </Route>
       </Routes>
-    </>
+    </BrowserRouter>
   );
 }

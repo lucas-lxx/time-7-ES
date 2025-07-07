@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { AuthContainer } from '../components/AuthContainer';
 
 export default function Login() {
-  const { handleSubmit, register, errors } = useLoginController();
+  const { handleSubmit, register, errors, isLoading } = useLoginController();
 
   return (
     <AuthContainer titulo='Acesse sua Conta'>
@@ -24,7 +24,7 @@ export default function Login() {
           error={errors.password?.message}
         />
 
-        <Button className='mt-2' type='submit'>
+        <Button className='mt-2' type='submit' isLoading={isLoading}>
           Entrar
         </Button>
       </form>

@@ -5,7 +5,7 @@ import { Button } from '../components/Button';
 import { Link } from 'react-router-dom';
 
 export default function Cadastro() {
-  const { handleSubmit, register, errors } = useCadastroController();
+  const { handleSubmit, register, errors, isLoading } = useCadastroController();
   return (
     <AuthContainer titulo='Crie sua Conta'>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
@@ -27,7 +27,7 @@ export default function Cadastro() {
           {...register('password')}
           error={errors.password?.message}
         />
-        <Button className='mt-2' type='submit'>
+        <Button className='mt-2' type='submit' isLoading={isLoading}>
           Criar Minha Conta
         </Button>
       </form>
