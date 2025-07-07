@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import TelaAutenticacao from './components/TelaAutenticacao';
+import TelaAutenticacao from './TelaAutenticacao';
 
-export default function AppLayout() {
+export default function AuthLayout() {
   return (
     <TelaAutenticacao>
       <Outlet />

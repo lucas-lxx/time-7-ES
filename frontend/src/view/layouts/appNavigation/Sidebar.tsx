@@ -1,3 +1,5 @@
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+
 import { Link } from 'react-router-dom';
 
 import {
@@ -59,7 +61,7 @@ const items = [
   },
 ];
 
-export function AppSidebar() {
+function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
@@ -87,5 +89,17 @@ export function AppSidebar() {
         </div>
       </SidebarFooter>
     </Sidebar>
+  );
+}
+
+export function LayoutSidebar({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <main className='bg-sky-400 w-full p-2 '>
+        <SidebarTrigger className='absolute' />
+        {children}
+      </main>
+    </SidebarProvider>
   );
 }

@@ -1,4 +1,4 @@
-import Rotas from './routes/Rotas';
+import Routes from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster position='top-center' richColors />
-      <Rotas />;
+      <Routes />;
     </QueryClientProvider>
   );
 }
