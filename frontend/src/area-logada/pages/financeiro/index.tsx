@@ -1,6 +1,6 @@
-import SheetInserirCompras from '../components/SheetInserirCompras';
-import SheetButton from '../components/SheetButton';
-import TabelaGastos from '../components/TabelaGastos';
+import SheetInserirCompras from '../../components/SheetInserirCompras';
+import SheetButton from '../../components/SheetButton';
+import TabelaGastos from './TabelaGastos';
 
 export default function Financeiro() {
   return (

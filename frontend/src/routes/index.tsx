@@ -7,7 +7,7 @@ import Login from '../autenticacao/login';
 import Coringa from '../autenticacao/components/Coringa';
 import Recuperacao from '../autenticacao/recuperacao';
 import Teste from '../area-logada/pages/Teste';
-import Financeiro from '../area-logada/pages/Financeiro';
+import Financeiro from '../area-logada/pages/financeiro';
 
 import { AuthGuard } from './AuthGuard';
 

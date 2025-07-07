@@ -1,6 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   House,
@@ -62,6 +61,9 @@ const items = [
 ];
 
 function AppSidebar() {
+  const { pathname } = useLocation();
+  const currentPath = pathname.substring(1);
+  console.log(currentPath);
   return (
     <Sidebar>
       <SidebarContent>
@@ -71,10 +73,13 @@ function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    className={`${currentPath === item.endpoint ? 'bg-cor-principal hover:bg-cor-principal' : 'hover:border-1 hover:border-cor-principal'} `}
+                  >
                     <Link to={item.endpoint}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span className='font-roboto'>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
