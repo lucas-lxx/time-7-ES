@@ -40,8 +40,9 @@ export class AuthGuard implements CanActivate {
         secret: process.env.JWT_SECRET
       });
 
-      request["account"] = {
-        email: payload.sub
+      request["user"] = {
+        id: payload.sub,
+        email: payload.email
       };
     } catch {
       throw new UnauthorizedException("User unauthorized");

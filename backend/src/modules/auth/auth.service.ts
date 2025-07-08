@@ -31,7 +31,7 @@ export class AuthService {
     }
 
     const [accessToken, refreshToken] = await Promise.all([
-      this.generateAccessToken({ userId: user.id }),
+      this.generateAccessToken({ userId: user.id, userEmail: user.email }),
       this.generateRefreshToken(user.id)
     ]);
 
@@ -62,7 +62,8 @@ export class AuthService {
     }
 
     const accessToken = await this.generateAccessToken({
-      userId: refreshToken.userId
+      userId: refreshToken.userId,
+      userEmail: refreshToken.user.email
     });
 
     return {
@@ -70,7 +71,10 @@ export class AuthService {
     };
   }
 
-  private async generateAccessToken(payload: { userId: string }) {
+  private async generateAccessToken(payload: {
+    userId: string;
+    userEmail: string;
+  }) {
     return this.jwtService.signAsync({
       sub: payload.userId
     });
