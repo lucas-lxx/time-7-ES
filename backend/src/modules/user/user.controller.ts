@@ -19,7 +19,13 @@ import {
   PrismaClientValidationError
 } from "@prisma/client/runtime/library";
 import { IsPublic } from "src/shared/decorators/isPublic";
-import { ApiCreatedResponse, ApiOperation, ApiResponse } from "@nestjs/swagger";
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiUnauthorizedResponse
+} from "@nestjs/swagger";
 import { UserEmail } from "src/shared/decorators/userEmail";
 import { User } from "src/shared/decorators/user";
 import { plainToClass } from "class-transformer";
@@ -52,6 +58,15 @@ export class UserController {
     return await this.userService.findAll();
   }
 
+  @ApiBearerAuth("access-token")
+  @ApiOperation({ summary: "Get my information" })
+  @ApiResponse({
+    status: 200,
+    description: "The user has gotten their info"
+  })
+  @ApiUnauthorizedResponse({
+    description: "User unauthorized — missing or invalid JWT"
+  })
   @Get("/me")
   async findMe(@UserEmail() email: string, @User() user: string) {
     console.log(user);
