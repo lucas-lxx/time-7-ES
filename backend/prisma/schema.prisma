@@ -23,6 +23,8 @@ model User {
   Expense        Expense[]
   PaymentMethod  PaymentMethod[]
   ExpenseClasses ExpenseClass[]
+  OwnedGroup     Group[]
+  userGroup      GroupUser[]
 }
 
 model RefreshToken {
@@ -64,4 +66,30 @@ model ExpenseClass {
   Expense Expense[]
   User    User      @relation(fields: [userId], references: [id])
   userId  String
+}
+
+model Group {
+  id          String      @id @unique @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime    @map("created_at")
+  owner       User        @relation(fields: [ownerId], references: [id])
+  ownerId     String      @map("owner_id")
+  groupUser   GroupUser[]
+}
+
+enum Permission {
+  EDIT
+  VIEW
+}
+
+model GroupUser {
+  Group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String @map("id_group")
+  User    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String @map("id_user")
+
+  permission Permission @default(VIEW)
+
+  @@id([groupId, userId])
 }
