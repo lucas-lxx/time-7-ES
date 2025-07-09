@@ -6,11 +6,11 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { AuthGuard } from "./modules/auth/auth.guard";
 import { GroupModule } from "./modules/group/group.module";
 import { ExpenseClassModule } from './modules/expense_class/expense_class.module';
-
+import { PaymentMethodModule } from './modules/payment_method/payment_method.module';
 
 
 @Module({
-  imports: [AuthModule, UserModule, PrismaModule, GroupModule, ExpenseClassModule],
+  imports: [AuthModule, UserModule, PrismaModule, GroupModule, ExpenseClassModule, PaymentMethodModule],
   providers: [
     {
       provide: APP_PIPE,
