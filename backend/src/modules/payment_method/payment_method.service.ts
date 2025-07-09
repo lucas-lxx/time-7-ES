@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePaymentMethodDto } from './dto/create-payment_method.dto';
-import { UpdatePaymentMethodDto } from './dto/update-payment_method.dto';
+import { Injectable } from "@nestjs/common";
+import { CreatePaymentMethodDto } from "./dto/create-payment_method.dto";
+import { UpdatePaymentMethodDto } from "./dto/update-payment_method.dto";
 
 @Injectable()
 export class PaymentMethodService {
   create(createPaymentMethodDto: CreatePaymentMethodDto) {
-    return 'This action adds a new paymentMethod';
+    return "This action adds a new paymentMethod";
   }
 
   findAll() {

@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreateExpenseClassDto } from './dto/create-expense_class.dto';
-import { UpdateExpenseClassDto } from './dto/update-expense_class.dto';
+import { Injectable } from "@nestjs/common";
+import { CreateExpenseClassDto } from "./dto/create-expense_class.dto";
+import { UpdateExpenseClassDto } from "./dto/update-expense_class.dto";
 
 @Injectable()
 export class ExpenseClassService {
   create(createExpenseClassDto: CreateExpenseClassDto) {
-    return 'This action adds a new expenseClass';
+    return "This action adds a new expenseClass";
   }
 
   findAll() {
