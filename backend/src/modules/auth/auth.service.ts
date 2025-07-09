@@ -76,7 +76,8 @@ export class AuthService {
     userEmail: string;
   }) {
     return this.jwtService.signAsync({
-      sub: payload.userId
+      sub: payload.userId,
+      email: payload.userEmail
     });
   }
 
