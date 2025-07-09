@@ -1,0 +1,29 @@
+services:
+  back:
+    build:
+      context: ./backend
+      dockerfile: "dev.dockerfile"
+      args:
+        - USER_ID=1000
+        - GROUP_ID=1000
+    volumes:
+      - ./backend:/app
+    ports:
+      - 3000:3000
+    env_file:
+      - ./backend/.env
+    command: ["run", "start:dev"]
+    stdin_open: true
+    tty: true
+    depends_on:
+      - postgres
+  postgres:
+    image: "postgres:17"
+    env_file:
+      - ./backend/.env
+    ports:
+      - 7000:5432
+    volumes:
+      - es_app:/var/lib/postgresql/data
+volumes:
+  es_app:
