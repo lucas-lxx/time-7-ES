@@ -11,12 +11,16 @@ import { GroupService } from "./group.service";
 import { CreateGroupDto } from "./dto/create-group.dto";
 import { UpdateGroupDto } from "./dto/update-group.dto";
 import { UserId } from "src/shared/decorators/userId";
+import { ApiOperation } from "@nestjs/swagger";
 
 @Controller("group")
 export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
   @Post()
+  @ApiOperation({
+    summary: "Create a group"
+  })
   async create(
     @UserId() userId: string,
     @Body() createGroupDto: CreateGroupDto
@@ -24,6 +28,9 @@ export class GroupController {
     return await this.groupService.create(userId, createGroupDto);
   }
 
+  @ApiOperation({
+    summary: "Find all groups of the logged user"
+  })
   @Get()
   async findAll() {
     return this.groupService.findAll();
