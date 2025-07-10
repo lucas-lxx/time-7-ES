@@ -37,8 +37,8 @@ export class GroupController {
   }
 
   @Get(":id")
-  async findOne(@Param("id") id: string) {
-    return this.groupService.findOne(+id);
+  async findOne(@UserId() userId: string, @Param("id") groupId: string) {
+    return await this.groupService.findOne(userId, groupId);
   }
 
   @Patch(":id")
