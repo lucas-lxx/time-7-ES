@@ -3,7 +3,7 @@ import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateGroupDto {
   @ApiProperty({
-    example: "casa",
+    example: "Home",
     description: "Creates the name of the group"
   })
   @IsString()
