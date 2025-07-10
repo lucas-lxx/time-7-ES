@@ -32,8 +32,8 @@ export class GroupController {
     summary: "Find all groups of the logged user"
   })
   @Get()
-  async findAll() {
-    return this.groupService.findAll();
+  async findAll(@UserId() userId: string) {
+    return await this.groupService.findAll(userId);
   }
 
   @Get(":id")
