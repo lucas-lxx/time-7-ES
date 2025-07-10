@@ -6,8 +6,8 @@ import Cadastro from '../autenticacao/cadastro';
 import Login from '../autenticacao/login';
 import Coringa from '../autenticacao/components/Coringa';
 import Recuperacao from '../autenticacao/recuperacao';
-import Teste from '../area-logada/pages/Teste';
-import Financeiro from '../area-logada/pages/financeiro';
+import Teste from '../dashboard/pages/Teste';
+import Financeiro from '../dashboard/pages/financeiro';
 
 import { AuthGuard } from './AuthGuard';
 
