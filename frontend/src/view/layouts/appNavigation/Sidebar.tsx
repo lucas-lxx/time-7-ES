@@ -1,5 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '@/app/hooks/useAuth';
+import { Button } from '../../../autenticacao/components/Button';
 
 import {
   House,
@@ -61,9 +63,10 @@ const items = [
 ];
 
 function AppSidebar() {
+  const { signout } = useAuth();
   const { pathname } = useLocation();
   const currentPath = pathname.substring(1);
-  console.log(currentPath);
+  // console.log(currentPath);
   return (
     <Sidebar>
       <SidebarContent>
@@ -89,6 +92,13 @@ function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+        <SidebarMenuButton
+          asChild
+          className='bg-cor-principal hover:bg-cor-principal hover:opacity-90 hover:border-1 cursor-pointer'
+        >
+          <Button onClick={signout}>Sair</Button>
+        </SidebarMenuButton>
+
         <div className='text-center text-sm text-black'>
           Os Supimpas © 2025 - Coletivo v1.0
         </div>

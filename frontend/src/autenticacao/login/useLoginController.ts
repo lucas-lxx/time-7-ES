@@ -3,8 +3,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { authService } from '@/services/authService';
-import { type SigninParams } from '@/services/authService/signin';
+import { authService } from '@/app/services/authService';
+import { type SigninParams } from '@/app/services/authService/signin';
+import { useAuth } from '../../app/hooks/useAuth';
 
 const schema = z.object({
   email: z
@@ -35,11 +36,12 @@ export function useLoginController() {
     },
   });
 
+  const { signin } = useAuth();
+
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
       const { accessToken } = await mutateAsync(data);
-      console.log({ accessToken });
-      toast.success('Usuário cadastrado com sucesso');
+      signin(accessToken);
     } catch {
       toast.error('Credenciais inválidas!', {
         action: {
