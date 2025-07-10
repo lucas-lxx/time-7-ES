@@ -5,7 +5,8 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
+  ParseUUIDPipe
 } from "@nestjs/common";
 import { GroupService } from "./services/group.service";
 import { CreateGroupDto } from "./dto/create-group.dto";
@@ -22,7 +23,7 @@ export class GroupController {
     summary: "Create a group"
   })
   async create(
-    @UserId() userId: string,
+    @UserId(ParseUUIDPipe) userId: string,
     @Body() createGroupDto: CreateGroupDto
   ) {
     return await this.groupService.create(userId, createGroupDto);
@@ -36,14 +37,18 @@ export class GroupController {
     return await this.groupService.findAll(userId);
   }
 
+  @ApiOperation({ summary: "Find group by id of the logged user" })
   @Get(":id")
-  async findOne(@UserId() userId: string, @Param("id") groupId: string) {
+  async findOne(
+    @UserId(ParseUUIDPipe) userId: string,
+    @Param("id", ParseUUIDPipe) groupId: string
+  ) {
     return await this.groupService.findOne(userId, groupId);
   }
 
   @Patch(":id")
   async update(
-    @Param("id") id: string,
+    @Param("id", ParseUUIDPipe) id: string,
     @Body() updateGroupDto: UpdateGroupDto
   ) {
     return this.groupService.update(+id, updateGroupDto);
