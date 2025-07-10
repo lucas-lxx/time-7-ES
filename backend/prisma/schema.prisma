@@ -72,7 +72,7 @@ model Group {
   id          String      @id @unique @default(uuid())
   name        String
   description String?
-  createdAt   DateTime    @map("created_at")
+  createdAt   DateTime    @default(now()) @map("created_at")
   owner       User        @relation(fields: [ownerId], references: [id])
   ownerId     String      @map("owner_id")
   groupUser   GroupUser[]
