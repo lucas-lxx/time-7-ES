@@ -46,8 +46,24 @@ export class GroupService {
     });
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} group`;
+  async findOne(userId: string, groupId: string) {
+    return await this.prismaService.group.findFirst({
+      where: {
+        id: groupId,
+        AND: {
+          groupUser: {
+            some: { userId }
+          }
+        }
+      },
+      include: {
+        groupUser: {
+          where: {
+            userId
+          }
+        }
+      }
+    });
   }
 
   async update(id: number, updateGroupDto: UpdateGroupDto) {
