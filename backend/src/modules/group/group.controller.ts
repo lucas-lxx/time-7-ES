@@ -7,7 +7,7 @@ import {
   Param,
   Delete
 } from "@nestjs/common";
-import { GroupService } from "./group.service";
+import { GroupService } from "./services/group.service";
 import { CreateGroupDto } from "./dto/create-group.dto";
 import { UpdateGroupDto } from "./dto/update-group.dto";
 import { UserId } from "src/shared/decorators/userId";
