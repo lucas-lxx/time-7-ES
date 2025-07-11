@@ -89,7 +89,7 @@ export class GroupService {
       where: {
         id: groupId,
         AND: {
-          groupUser: { some: { userId } }
+          ownerId: userId
         }
       }
     });
