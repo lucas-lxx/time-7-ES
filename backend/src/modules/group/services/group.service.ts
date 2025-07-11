@@ -66,8 +66,22 @@ export class GroupService {
     });
   }
 
-  async update(id: number, updateGroupDto: UpdateGroupDto) {
-    return `This action updates a #${id} group`;
+  async update(
+    userId: string,
+    groupId: string,
+    updateGroupDto: UpdateGroupDto
+  ) {
+    return await this.prismaService.group.update({
+      data: updateGroupDto,
+      where: {
+        id: groupId,
+        AND: {
+          groupUser: {
+            some: { userId }
+          }
+        }
+      }
+    });
   }
 
   async remove(id: number) {
