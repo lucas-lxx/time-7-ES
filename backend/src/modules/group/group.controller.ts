@@ -6,13 +6,17 @@ import {
   Patch,
   Param,
   Delete,
-  ParseUUIDPipe
+  ParseUUIDPipe,
+  HttpCode,
+  NotFoundException,
+  InternalServerErrorException
 } from "@nestjs/common";
 import { GroupService } from "./services/group.service";
 import { CreateGroupDto } from "./dto/create-group.dto";
 import { UpdateGroupDto } from "./dto/update-group.dto";
 import { UserId } from "src/shared/decorators/userId";
 import { ApiOperation } from "@nestjs/swagger";
+import { NotFoundError } from "rxjs";
 
 @Controller("group")
 export class GroupController {
@@ -48,7 +52,7 @@ export class GroupController {
 
   @Patch(":id")
   async update(
-    @UserId() userId: string,
+    @UserId(ParseUUIDPipe) userId: string,
     @Param("id", ParseUUIDPipe) groupId: string,
     @Body() updateGroupDto: UpdateGroupDto
   ) {
@@ -56,7 +60,17 @@ export class GroupController {
   }
 
   @Delete(":id")
-  async remove(@Param("id") id: string) {
-    return this.groupService.remove(+id);
+  async remove(
+    @UserId(ParseUUIDPipe) userId: string,
+    @Param("id") groupId: string
+  ) {
+    try {
+      return await this.groupService.remove(userId, groupId);
+    } catch (err) {
+      if ((err = "p2025")) {
+        throw new NotFoundException("Group not found");
+      }
+      throw new InternalServerErrorException();
+    }
   }
 }
