@@ -1,10 +1,16 @@
-import { IsString, MaxLength } from "class-validator";
+import { IsString, IsOptional, IsUUID } from 'class-validator';
 
 export class CreatePaymentMethodDto {
   @IsString()
-  @MaxLength(255)
-  nome: string;
+  type: string;
 
   @IsString()
-  classe_tipo_de_gasto: string;
+  label: string;
+
+  @IsOptional()
+  @IsString()
+  last4?: string;
+
+  @IsUUID()
+  userId: string;
 }

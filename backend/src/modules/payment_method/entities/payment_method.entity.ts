@@ -1,14 +1,13 @@
-import { IsNotEmpty, IsString, IsUUID, MaxLength } from "class-validator";
+import { Expense } from './expense.entity';
+import { User } from '.user/entities/user.entity.ts';
 
 export class PaymentMethod {
-  @IsUUID()
-  @IsNotEmpty()
   id: string;
-
-  @IsString()
-  @MaxLength(255)
-  nome: string;
-
-  @IsString()
-  classe_tipo_de_gasto: string;
+  type: string;
+  label: string;
+  last4?: string | null;
+  created_at: Date;
+  Expense: Expense[];
+  User: User;
+  userId: string;
 }

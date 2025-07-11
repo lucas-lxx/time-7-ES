@@ -27,7 +27,7 @@ export class PaymentMethodController {
 
   @Get(":id")
   findOne(@Param("id") id: string) {
-    return this.paymentMethodService.findOne(+id);
+    return this.paymentMethodService.findOne(id);
   }
 
   @Patch(":id")
@@ -35,11 +35,11 @@ export class PaymentMethodController {
     @Param("id") id: string,
     @Body() updatePaymentMethodDto: UpdatePaymentMethodDto
   ) {
-    return this.paymentMethodService.update(+id, updatePaymentMethodDto);
+    return this.paymentMethodService.update(id, updatePaymentMethodDto);
   }
 
   @Delete(":id")
   remove(@Param("id") id: string) {
-    return this.paymentMethodService.remove(+id);
+    return this.paymentMethodService.remove(id);
   }
 }
