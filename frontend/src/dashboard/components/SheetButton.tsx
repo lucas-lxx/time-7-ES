@@ -16,7 +16,7 @@ export default function SheetButton({
     <Sheet>
       <Button
         asChild
-        className='flex items-center mr-7 max-sm:fixed max-sm:bottom-8 max-sm:inset-x-8 max-sm:m-auto'
+        className='flex items-center mr-7 max-sm:fixed max-sm:bottom-8 max-sm:inset-x-6 max-sm:m-auto z-10'
       >
         <SheetTrigger>
           <CirclePlus />
