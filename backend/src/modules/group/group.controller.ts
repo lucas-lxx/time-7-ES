@@ -50,6 +50,9 @@ export class GroupController {
     return await this.groupService.findOne(userId, groupId);
   }
 
+  @ApiOperation({
+    summary: "Update group by id of the logged user, pass data on body"
+  })
   @Patch(":id")
   async update(
     @UserId(ParseUUIDPipe) userId: string,
@@ -59,6 +62,7 @@ export class GroupController {
     return await this.groupService.update(userId, groupId, updateGroupDto);
   }
 
+  @ApiOperation({ summary: "Remove group by id of the logged user" })
   @Delete(":id")
   async remove(
     @UserId(ParseUUIDPipe) userId: string,
