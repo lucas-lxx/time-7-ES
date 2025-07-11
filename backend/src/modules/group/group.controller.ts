@@ -48,10 +48,11 @@ export class GroupController {
 
   @Patch(":id")
   async update(
-    @Param("id", ParseUUIDPipe) id: string,
+    @UserId() userId: string,
+    @Param("id", ParseUUIDPipe) groupId: string,
     @Body() updateGroupDto: UpdateGroupDto
   ) {
-    return this.groupService.update(+id, updateGroupDto);
+    return await this.groupService.update(userId, groupId, updateGroupDto);
   }
 
   @Delete(":id")
