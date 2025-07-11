@@ -1,5 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { Permission } from "@prisma/client";
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested
+} from "class-validator";
+import { Type } from "class-transformer";
+import { MemberDto } from "./member.dto";
 
 export class CreateGroupDto {
   @ApiProperty({
@@ -9,11 +18,24 @@ export class CreateGroupDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-  @IsString()
-  @IsOptional()
-  @ApiProperty({
+
+  @ApiPropertyOptional({
     example: "House expenses",
     description: "Creates description for the group"
   })
+  @IsString()
+  @IsOptional()
   description?: string;
+
+  @ApiProperty({
+    example: [
+      { userEmail: "yuri@example.com", permission: Permission.EDIT },
+      { userEmail: "matheus@example.com", permission: Permission.VIEW }
+    ],
+    description: ""
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => MemberDto)
+  members: MemberDto[];
 }
