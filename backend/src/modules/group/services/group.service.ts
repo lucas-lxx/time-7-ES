@@ -84,7 +84,14 @@ export class GroupService {
     });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} group`;
+  async remove(userId: string, groupId: string) {
+    return await this.prismaService.group.delete({
+      where: {
+        id: groupId,
+        AND: {
+          groupUser: { some: { userId } }
+        }
+      }
+    });
   }
 }
