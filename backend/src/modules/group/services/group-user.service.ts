@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/shared/prisma/prisma.service";
 import { CreateGroupUserDto } from "../dto/create-group-user.dto";
 import { UserService } from "src/modules/user/user.service";
@@ -49,7 +49,8 @@ export class GroupUserService {
       memberDto
     );
     await this.prismaService.groupUser.createMany({
-      data: added
+      data: added,
+      skipDuplicates: true
     });
 
     return { errors, added };
