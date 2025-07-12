@@ -16,8 +16,10 @@ import { CreateGroupDto } from "./dto/create-group.dto";
 import { UpdateGroupDto } from "./dto/update-group.dto";
 import { UserId } from "src/shared/decorators/userId";
 import {
+  ApiBody,
   ApiExtraModels,
   ApiOperation,
+  ApiParam,
   ApiResponse,
   getSchemaPath
 } from "@nestjs/swagger";
@@ -26,10 +28,16 @@ import {
   GroupResponseDto,
   GroupWithErrorsResponseDto
 } from "./dto/response-group.dto";
+import { MemberDto } from "./dto/member.dto";
+import { GroupUserService } from "./services/group-user.service";
+import { AddMembersResponseDto } from "./dto/create-group-user.dto";
 
 @Controller("group")
 export class GroupController {
-  constructor(private readonly groupService: GroupService) {}
+  constructor(
+    private readonly groupService: GroupService,
+    private readonly groupUserService: GroupUserService
+  ) {}
 
   @ApiExtraModels(GroupResponseDto, GroupWithErrorsResponseDto)
   @ApiOperation({ summary: "Create a group" })
@@ -44,9 +52,6 @@ export class GroupController {
     schema: { $ref: getSchemaPath(GroupWithErrorsResponseDto) }
   })
   @Post()
-  @ApiOperation({
-    summary: "Create a group"
-  })
   async create(
     @UserId(ParseUUIDPipe) userId: string,
     @Body() createGroupDto: CreateGroupDto,
@@ -67,6 +72,30 @@ export class GroupController {
 
     return res.status(201).json(group);
   }
+  @ApiOperation({ summary: "Add members to a group" })
+  @ApiParam({
+    name: "groupId",
+    description: "UUID of the group",
+    type: "string",
+    format: "uuid"
+  })
+  @ApiBody({
+    type: [MemberDto],
+    description: "List of members to add (email and permission)"
+  })
+  @ApiResponse({
+    status: 201,
+    description: "Members added to the group",
+    type: AddMembersResponseDto
+  })
+  @Post(":groupId/members")
+  async addMember(
+    @UserId(ParseUUIDPipe) userId: string,
+    @Param("groupId", ParseUUIDPipe) groupId: string,
+    @Body() membersDto: MemberDto[]
+  ) {
+    return await this.groupService.addMembers(userId, groupId, membersDto);
+  }
 
   @ApiOperation({
     summary: "Find all groups of the logged user"
@@ -82,7 +111,7 @@ export class GroupController {
     @UserId(ParseUUIDPipe) userId: string,
     @Param("id", ParseUUIDPipe) groupId: string
   ) {
-    return await this.groupService.findOne(userId, groupId);
+    return await this.groupService.findOneWithUsers(userId, groupId);
   }
 
   @ApiOperation({

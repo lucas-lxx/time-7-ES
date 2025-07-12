@@ -1,15 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateGroupDto } from "../dto/create-group.dto";
 import { UpdateGroupDto } from "../dto/update-group.dto";
 import { PrismaService } from "src/shared/prisma/prisma.service";
 import { Permission } from "@prisma/client";
 import { UserService } from "src/modules/user/user.service";
+import { MemberDto } from "../dto/member.dto";
+import { GroupUserService } from "./group-user.service";
 
 @Injectable()
 export class GroupService {
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly groupUserService: GroupUserService
   ) {}
 
   async create(userId: string, createGroupDto: CreateGroupDto) {
@@ -52,6 +55,19 @@ export class GroupService {
     return { errors, group };
   }
 
+  async addMembers(userId: string, groupId: string, membersDto: MemberDto[]) {
+    const group = await this.findOne(userId, groupId);
+    if (!group) {
+      throw new NotFoundException("Group not found");
+    }
+    const { errors, added } = await this.groupUserService.addMembers(
+      groupId,
+      membersDto
+    );
+
+    return { errors, added };
+  }
+
   async findAll(userId: string) {
     return await this.prismaService.group.findMany({
       where: {
@@ -74,6 +90,19 @@ export class GroupService {
   }
 
   async findOne(userId: string, groupId: string) {
+    return await this.prismaService.group.findFirst({
+      where: {
+        id: groupId,
+        AND: {
+          groupUser: {
+            some: { userId }
+          }
+        }
+      }
+    });
+  }
+
+  async findOneWithUsers(userId: string, groupId: string) {
     return await this.prismaService.group.findFirst({
       where: {
         id: groupId,
