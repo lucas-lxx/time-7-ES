@@ -74,6 +74,7 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto
   ) {
     try {
+      // TODO there is a problem with the password when needing to be updated
       return await this.userService.update(email, updateUserDto);
     } catch (err) {
       if (err instanceof PrismaClientValidationError) {
@@ -89,6 +90,7 @@ export class UserController {
       return await this.userService.removeByEmail(email);
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError) {
+        // TODO this delete is not really working
         throw new NotFoundException("User not found");
       }
       throw new InternalServerErrorException();
