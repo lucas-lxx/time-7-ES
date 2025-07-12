@@ -144,4 +144,24 @@ export class GroupController {
       throw new InternalServerErrorException();
     }
   }
+
+  @ApiOperation({
+    summary: "Remove group by id of the logged user",
+    description: "Only the owner of the group can delete it"
+  })
+  @Delete(":groupId/member/:userId")
+  async removeMemberById(
+    @UserId(ParseUUIDPipe) ownerId: string,
+    @Param("userId") userId: string,
+    @Param("groupId") groupId: string
+  ) {
+    try {
+      return await this.groupService.removeMemberById(ownerId, userId, groupId);
+    } catch (err) {
+      if ((err = "p2025")) {
+        throw new NotFoundException("Group not found");
+      }
+      throw new InternalServerErrorException();
+    }
+  }
 }

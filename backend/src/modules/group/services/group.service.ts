@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException
+} from "@nestjs/common";
 import { CreateGroupDto } from "../dto/create-group.dto";
 import { UpdateGroupDto } from "../dto/update-group.dto";
 import { PrismaService } from "src/shared/prisma/prisma.service";
@@ -146,6 +150,27 @@ export class GroupService {
         id: groupId,
         AND: {
           ownerId: userId
+        }
+      }
+    });
+  }
+
+  async removeMemberById(ownerId: string, userId: string, groupId: string) {
+    const group = await this.findOne(ownerId, groupId);
+    if (!group) {
+      throw new NotFoundException("Group not found");
+    }
+    if (group.ownerId !== ownerId) {
+      throw new ForbiddenException("Only group owner can remove an user");
+    }
+    if (userId === ownerId) {
+      throw new ForbiddenException("Group owner cannot remove themselves");
+    }
+    return await this.prismaService.groupUser.delete({
+      where: {
+        groupId_userId: {
+          userId,
+          groupId
         }
       }
     });
