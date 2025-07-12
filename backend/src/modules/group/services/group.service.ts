@@ -3,53 +3,26 @@ import { CreateGroupDto } from "../dto/create-group.dto";
 import { UpdateGroupDto } from "../dto/update-group.dto";
 import { PrismaService } from "src/shared/prisma/prisma.service";
 import { Permission } from "@prisma/client";
-import { UserService } from "src/modules/user/user.service";
 
 @Injectable()
 export class GroupService {
-  constructor(
-    private readonly prismaService: PrismaService,
-    private readonly userService: UserService
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async create(userId: string, createGroupDto: CreateGroupDto) {
-    const { name, description, members } = createGroupDto;
-    const emails = members.map(member => member.userEmail);
-    const usersData = await this.userService.findByEmails(emails);
-
-    const emailToId = new Map(usersData.map(user => [user.email, user.id]));
-    const errors: string[] = [];
-    const added: { userId: string; permission: Permission }[] = [];
-    for (const member of members) {
-      const uuid = emailToId.get(member.userEmail);
-
-      if (!uuid) {
-        errors.push(member.userEmail);
-        continue;
-      }
-
-      added.push({
-        userId: uuid,
-        permission: member.permission
-      });
-    }
-
-    added.push({ userId, permission: Permission.EDIT });
-
     const group = await this.prismaService.group.create({
       data: {
         ownerId: userId,
-        name,
-        description,
+        ...createGroupDto,
         groupUser: {
-          createMany: {
-            data: added
+          create: {
+            userId: userId,
+            permission: Permission.EDIT
           }
         }
       }
     });
 
-    return { errors, group };
+    return group;
   }
 
   async findAll(userId: string) {

@@ -6,19 +6,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle("Coletivo example")
-    .setDescription("The coletivo API description")
+    .setTitle("Cats example")
+    .setDescription("The cats API description")
     .setVersion("1.0")
-    .addTag("coletivo")
-    .addBearerAuth(
-      {
-        type: "http",
-        scheme: "bearer",
-        bearerFormat: "JWT",
-        description: "Enter JWT token like: Bearer <token>"
-      },
-      "access-token"
-    )
+    .addTag("cats")
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, documentFactory);

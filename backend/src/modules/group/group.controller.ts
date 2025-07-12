@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  HttpCode,
   NotFoundException,
   InternalServerErrorException,
   Res
@@ -15,57 +16,22 @@ import { GroupService } from "./services/group.service";
 import { CreateGroupDto } from "./dto/create-group.dto";
 import { UpdateGroupDto } from "./dto/update-group.dto";
 import { UserId } from "src/shared/decorators/userId";
-import {
-  ApiExtraModels,
-  ApiOperation,
-  ApiResponse,
-  getSchemaPath
-} from "@nestjs/swagger";
+import { ApiOperation } from "@nestjs/swagger";
 import { Response } from "express";
-import {
-  GroupResponseDto,
-  GroupWithErrorsResponseDto
-} from "./dto/response-group.dto";
 
 @Controller("group")
 export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
-  @ApiExtraModels(GroupResponseDto, GroupWithErrorsResponseDto)
-  @ApiOperation({ summary: "Create a group" })
-  @ApiResponse({
-    status: 201,
-    description: "Group created successfully",
-    schema: { $ref: getSchemaPath(GroupResponseDto) }
-  })
-  @ApiResponse({
-    status: 207,
-    description: "Group created but with user errors",
-    schema: { $ref: getSchemaPath(GroupWithErrorsResponseDto) }
-  })
   @Post()
   @ApiOperation({
     summary: "Create a group"
   })
   async create(
     @UserId(ParseUUIDPipe) userId: string,
-    @Body() createGroupDto: CreateGroupDto,
-    @Res() res: Response
+    @Body() createGroupDto: CreateGroupDto
   ) {
-    const { errors, group } = await this.groupService.create(
-      userId,
-      createGroupDto
-    );
-    console.log("asdf");
-
-    if (errors.length > 0) {
-      res.status(207).json({
-        errors: errors,
-        group: group
-      });
-    }
-
-    return res.status(201).json(group);
+    return await this.groupService.create(userId, createGroupDto);
   }
 
   @ApiOperation({
