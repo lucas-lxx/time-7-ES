@@ -75,7 +75,7 @@ export class GroupService {
   async findAll(userId: string) {
     return await this.prismaService.group.findMany({
       where: {
-        ownerId: userId
+        groupUser: { some: { userId } }
       },
       include: {
         groupUser: {
