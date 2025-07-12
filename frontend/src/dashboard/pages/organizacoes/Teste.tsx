@@ -1,8 +1,8 @@
 import { mockCardOrganization as mockData } from '@/mocks/MockCardOrganization';
 
-import CardOrganizacao from '../components/CardOrganizacao';
-import SheetOrganizacao from '../components/SheetOrganizacao';
-import SheetButton from '../components/SheetButton';
+import CardOrganizacao from '../../components/CardOrganizacao';
+import FormularioOrganizacao from './components/FormularioOrganizacao';
+import SheetButton from '../../components/SheetButton';
 
 export default function Teste() {
   return (
@@ -13,7 +13,7 @@ export default function Teste() {
         </h1>
         <SheetButton
           nomeEvento='Criar Organização'
-          sheetContent={<SheetOrganizacao />}
+          sheetContent={<FormularioOrganizacao />}
         />
       </div>
       <div className='flex flex-wrap px-4 gap-x-4 gap-y-6 max-sm:gap-y-1 max-sm:h-[85%] h-[90%] '>
