@@ -1,26 +1,69 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateExpenseClassDto } from "./dto/create-expense_class.dto";
 import { UpdateExpenseClassDto } from "./dto/update-expense_class.dto";
+import { PrismaService } from "src/shared/prisma/prisma.service";
 
 @Injectable()
 export class ExpenseClassService {
-  create(createExpenseClassDto: CreateExpenseClassDto) {
-    return "This action adds a new expenseClass";
+  constructor(private readonly prisma: PrismaService) {}
+  async create(createExpenseClassDto: CreateExpenseClassDto) {
+    const name = await this.prisma.expenseClass.create({
+      data: {
+        name: createExpenseClassDto.name,
+        userId: createExpenseClassDto.userId
+      }
+    });
+    return name;
   }
 
-  findAll() {
-    return `This action returns all expenseClass`;
+  async findAll() {
+    return await this.prisma.expenseClass.findMany({
+      orderBy: {
+        id: "desc"
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} expenseClass`;
+  async findOne(id: string) {
+    const expense = await this.prisma.expenseClass.findUnique({
+      where: { id }
+    });
+
+    if (!expense) {
+      throw new NotFoundException("Expense Class não encontrado");
+    }
+
+    return expense;
   }
 
-  update(id: number, updateExpenseClassDto: UpdateExpenseClassDto) {
-    return `This action updates a #${id} expenseClass`;
+  async update(id: string, updateExpenseClassDto: UpdateExpenseClassDto) {
+    const name = await this.prisma.expenseClass.findUnique({
+      where: { id }
+    });
+
+    if (!name) {
+      throw new NotFoundException("Expense Class não encontrado");
+    }
+
+    return await this.prisma.expenseClass.update({
+      where: { id },
+      data: {
+        name: updateExpenseClassDto.name
+      }
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} expenseClass`;
+  async remove(id: string) {
+    const expense = await this.prisma.expenseClass.findUnique({
+      where: { id }
+    });
+
+    if (!expense) {
+      throw new NotFoundException("Expense Class não encontrado");
+    }
+
+    return await this.prisma.expenseClass.delete({
+      where: { id }
+    });
   }
 }

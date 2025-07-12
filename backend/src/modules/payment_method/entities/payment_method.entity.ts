@@ -1,5 +1,4 @@
-import { Expense } from './expense.entity';
-import { User } from '.user/entities/user.entity.ts';
+import { Expense, User } from "@prisma/client";
 
 export class PaymentMethod {
   id: string;

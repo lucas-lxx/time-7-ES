@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreatePaymentMethodDto } from "./dto/create-payment_method.dto";
 import { UpdatePaymentMethodDto } from "./dto/update-payment_method.dto";
-import { PrismaClient } from "@prisma/client";
+import { PrismaService } from "src/shared/prisma/prisma.service";
 
-const prisma = new PrismaClient();
 @Injectable()
 export class PaymentMethodService {
+  constructor(private readonly prisma: PrismaService) {}
   async create(createPaymentMethodDto: CreatePaymentMethodDto) {
-    const payment = await prisma.paymentMethod.create({
+    const payment = await this.prisma.paymentMethod.create({
       data: {
         type: createPaymentMethodDto.type,
         label: createPaymentMethodDto.label,
@@ -19,7 +19,7 @@ export class PaymentMethodService {
   }
 
   async findAll() {
-    return await prisma.paymentMethod.findMany({
+    return await this.prisma.paymentMethod.findMany({
       orderBy: {
         id: "desc"
       }
@@ -27,7 +27,7 @@ export class PaymentMethodService {
   }
 
   async findOne(id: string) {
-    const payment = await prisma.paymentMethod.findUnique({
+    const payment = await this.prisma.paymentMethod.findUnique({
       where: { id }
     });
 
@@ -39,7 +39,7 @@ export class PaymentMethodService {
   }
 
   async update(id: string, updatePaymentMethodDto: UpdatePaymentMethodDto) {
-    const payment = await prisma.paymentMethod.findUnique({
+    const payment = await this.prisma.paymentMethod.findUnique({
       where: { id }
     });
 
@@ -47,7 +47,7 @@ export class PaymentMethodService {
       throw new NotFoundException("Payment não encontrado.");
     }
 
-    return await prisma.paymentMethod.update({
+    return await this.prisma.paymentMethod.update({
       where: { id },
       data: {
         type: updatePaymentMethodDto.type,
@@ -57,7 +57,7 @@ export class PaymentMethodService {
   }
 
   async remove(id: string) {
-    const payment = await prisma.paymentMethod.findUnique({
+    const payment = await this.prisma.paymentMethod.findUnique({
       where: { id }
     });
 
@@ -65,7 +65,7 @@ export class PaymentMethodService {
       throw new NotFoundException("Payment não encontrado");
     }
 
-    return await prisma.paymentMethod.delete({
+    return await this.prisma.paymentMethod.delete({
       where: { id }
     });
   }

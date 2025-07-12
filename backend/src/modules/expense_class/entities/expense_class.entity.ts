@@ -1,10 +1,9 @@
-import { IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { Expense, User } from "@prisma/client";
 
-export class ExpenseClass {
-  @IsUUID()
-  @IsNotEmpty()
+export class ExpenseClassMethod {
   id: string;
-
-  @IsString()
-  classe_de_gasto: string;
+  name: string;
+  Expense: Expense[];
+  User: User;
+  userId: string;
 }

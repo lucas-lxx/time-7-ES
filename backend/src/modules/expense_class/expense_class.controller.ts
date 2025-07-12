@@ -27,7 +27,7 @@ export class ExpenseClassController {
 
   @Get(":id")
   findOne(@Param("id") id: string) {
-    return this.expenseClassService.findOne(+id);
+    return this.expenseClassService.findOne(id);
   }
 
   @Patch(":id")
@@ -35,11 +35,11 @@ export class ExpenseClassController {
     @Param("id") id: string,
     @Body() updateExpenseClassDto: UpdateExpenseClassDto
   ) {
-    return this.expenseClassService.update(+id, updateExpenseClassDto);
+    return this.expenseClassService.update(id, updateExpenseClassDto);
   }
 
   @Delete(":id")
   remove(@Param("id") id: string) {
-    return this.expenseClassService.remove(+id);
+    return this.expenseClassService.remove(id);
   }
 }
