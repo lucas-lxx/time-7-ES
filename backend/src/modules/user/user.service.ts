@@ -11,7 +11,6 @@ import { SALT_ROUNDS } from "src/shared/constants";
 import { UserWithoutPassword } from "./entities/user.entity";
 import { UserDto } from "./dto/user.dto";
 import { plainToClass } from "class-transformer";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 @Injectable()
 export class UserService {
@@ -44,6 +43,18 @@ export class UserService {
     return await this.prismaService.user.findUnique({
       select: user,
       where: { email }
+    });
+  }
+
+  async findByEmails(emails: string[]) {
+    return await this.prismaService.user.findMany({
+      select: {
+        id: true,
+        email: true
+      },
+      where: {
+        email: { in: emails }
+      }
     });
   }
 
