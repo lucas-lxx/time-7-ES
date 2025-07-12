@@ -3,7 +3,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { type objectMember } from '../useOrganizacaoController';
 
 interface MemberScrollAreaProps {
-  members: Member[];
+  members: objectMember[];
   onRemove: (email: string) => void;
 }
 

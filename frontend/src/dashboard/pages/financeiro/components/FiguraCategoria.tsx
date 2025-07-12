@@ -1,18 +1,24 @@
-import { CreditCard, Banknote } from 'lucide-react';
+import { CreditCard, Banknote, WalletMinimal } from 'lucide-react';
 
-type categoriaType = 'pix' | 'credito' | 'debito';
+export type categoriaType = 'PIX' | 'CREDITO' | 'DEBITO';
 
 interface FiguraCategoriaProps {
   categoria: categoriaType;
 }
 
 export default function FiguraCategoria({ categoria }: FiguraCategoriaProps) {
-  const Icon = categoria === 'pix' ? Banknote : CreditCard;
+  const iconMap: Record<categoriaType, React.ElementType> = {
+    PIX: Banknote,
+    CREDITO: CreditCard,
+    DEBITO: WalletMinimal,
+  };
+
+  const Icon = iconMap[categoria];
 
   const bgColors: Record<categoriaType, string> = {
-    pix: 'bg-green-400',
-    credito: 'bg-blue-400',
-    debito: 'bg-orange-400',
+    PIX: 'bg-green-400',
+    CREDITO: 'bg-blue-400',
+    DEBITO: 'bg-orange-400',
   };
 
   return (
