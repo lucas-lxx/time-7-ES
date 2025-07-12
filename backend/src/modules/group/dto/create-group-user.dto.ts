@@ -1,11 +1,28 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Permission } from "@prisma/client";
-import { IsEnum, IsUUID } from "class-validator";
 
 export class CreateGroupUserDto {
-  @IsUUID()
+  @ApiProperty({ format: "uuid" })
   groupId: string;
-  @IsUUID()
+
+  @ApiProperty({ format: "uuid" })
   userId: string;
-  @IsEnum(Permission)
+
+  @ApiProperty({ enum: Permission })
   permission: Permission;
+}
+
+export class AddMembersResponseDto {
+  @ApiProperty({
+    type: [String],
+    description: "List of emails that could not be added",
+    example: ["invalid@example.com"]
+  })
+  errors: string[];
+
+  @ApiProperty({
+    type: [CreateGroupUserDto],
+    description: "Successfully added group members"
+  })
+  added: CreateGroupUserDto[];
 }

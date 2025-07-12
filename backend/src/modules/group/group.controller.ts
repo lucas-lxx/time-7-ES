@@ -7,31 +7,94 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
-  HttpCode,
   NotFoundException,
   InternalServerErrorException,
   Res
 } from "@nestjs/common";
+import {
+  ApiBody,
+  ApiExtraModels,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  getSchemaPath
+} from "@nestjs/swagger";
+import {
+  GroupResponseDto,
+  GroupWithErrorsResponseDto
+} from "./dto/response-group.dto";
 import { GroupService } from "./services/group.service";
 import { CreateGroupDto } from "./dto/create-group.dto";
 import { UpdateGroupDto } from "./dto/update-group.dto";
 import { UserId } from "src/shared/decorators/userId";
-import { ApiOperation } from "@nestjs/swagger";
 import { Response } from "express";
+import { MemberDto } from "./dto/member.dto";
+import { GroupUserService } from "./services/group-user.service";
+import { AddMembersResponseDto } from "./dto/create-group-user.dto";
 
 @Controller("group")
 export class GroupController {
-  constructor(private readonly groupService: GroupService) {}
+  constructor(
+    private readonly groupService: GroupService,
+    private readonly groupUserService: GroupUserService
+  ) {}
 
-  @Post()
-  @ApiOperation({
-    summary: "Create a group"
+  @ApiExtraModels(GroupResponseDto, GroupWithErrorsResponseDto)
+  @ApiOperation({ summary: "Create a group" })
+  @ApiResponse({
+    status: 201,
+    description: "Group created successfully",
+    schema: { $ref: getSchemaPath(GroupResponseDto) }
   })
+  @ApiResponse({
+    status: 207,
+    description: "Group created but with user errors",
+    schema: { $ref: getSchemaPath(GroupWithErrorsResponseDto) }
+  })
+  @Post()
   async create(
     @UserId(ParseUUIDPipe) userId: string,
-    @Body() createGroupDto: CreateGroupDto
+    @Body() createGroupDto: CreateGroupDto,
+    @Res() res: Response
   ) {
-    return await this.groupService.create(userId, createGroupDto);
+    const { errors, group } = await this.groupService.create(
+      userId,
+      createGroupDto
+    );
+    console.log("asdf");
+
+    if (errors.length > 0) {
+      res.status(207).json({
+        errors: errors,
+        group: group
+      });
+    }
+
+    return res.status(201).json(group);
+  }
+  @ApiOperation({ summary: "Add members to a group" })
+  @ApiParam({
+    name: "groupId",
+    description: "UUID of the group",
+    type: "string",
+    format: "uuid"
+  })
+  @ApiBody({
+    type: [MemberDto],
+    description: "List of members to add (email and permission)"
+  })
+  @ApiResponse({
+    status: 201,
+    description: "Members added to the group",
+    type: AddMembersResponseDto
+  })
+  @Post(":groupId/members")
+  async addMember(
+    @UserId(ParseUUIDPipe) userId: string,
+    @Param("groupId", ParseUUIDPipe) groupId: string,
+    @Body() membersDto: MemberDto[]
+  ) {
+    return await this.groupService.addMembers(userId, groupId, membersDto);
   }
 
   @ApiOperation({
@@ -48,7 +111,7 @@ export class GroupController {
     @UserId(ParseUUIDPipe) userId: string,
     @Param("id", ParseUUIDPipe) groupId: string
   ) {
-    return await this.groupService.findOne(userId, groupId);
+    return await this.groupService.findOneWithUsers(userId, groupId);
   }
 
   @ApiOperation({
