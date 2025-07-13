@@ -1,3 +1,11 @@
+import { EllipsisVertical } from 'lucide-react';
+import Dropdown from '@/dashboard/pages/financeiro/components/Dropdown';
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
 import {
   Card,
   CardContent,
@@ -32,7 +40,15 @@ export default function CardOrganizacao({
         />
       </CardContent>
       <CardHeader className=' my-0.5'>
-        <CardTitle>{title}</CardTitle>
+        <div className='flex justify-between pt-1 items-end'>
+          <CardTitle>{title}</CardTitle>
+          <DropdownMenu>
+            <DropdownMenuTrigger className=' '>
+              <EllipsisVertical />
+            </DropdownMenuTrigger>
+            <Dropdown />
+          </DropdownMenu>
+        </div>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
 

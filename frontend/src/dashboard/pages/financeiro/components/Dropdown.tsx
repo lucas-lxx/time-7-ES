@@ -6,16 +6,20 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 interface DropdownProps {
-  criadoPor: string;
+  criadoPor?: string | undefined;
 }
 
 export default function Dropdown({ criadoPor }: DropdownProps) {
   return (
     <DropdownMenuContent>
-      <DropdownMenuLabel>
-        Criado por <span className='font-bold'>{criadoPor}</span>
-      </DropdownMenuLabel>
-      <DropdownMenuSeparator />
+      {criadoPor && (
+        <>
+          <DropdownMenuLabel>
+            Criado por <span className='font-bold'>{criadoPor}</span>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+        </>
+      )}
       <DropdownMenuItem className='text-blue-700'>Editar</DropdownMenuItem>
       <DropdownMenuItem className='text-red-700'>Apagar</DropdownMenuItem>
     </DropdownMenuContent>
