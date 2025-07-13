@@ -61,6 +61,7 @@ export default function FormularioOrganizacao() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Button
+            idButton='adicionarOrganizacao'
             type='button'
             onClick={handleAddMember}
             className='bg-sky-600 m-auto max-sm:m-0 max-sm:self-end text-sm px-4 h-9'
@@ -74,6 +75,7 @@ export default function FormularioOrganizacao() {
 
         <SheetFooter className='mt-auto'>
           <Button
+            idButton='editarOrganizacao'
             className='mt-2 bg-sky-600 active:bg-sky-900'
             type='submit'
             isLoading={isLoading}

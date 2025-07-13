@@ -4,11 +4,13 @@ import { Spinner } from './Spinner';
 /*@typescript-eslint/no-empty-object-type*/
 interface ButtonProps extends ComponentProps<'button'> {
   isLoading?: boolean;
+  idButton: string;
 }
 
 export function Button({
   className,
   isLoading,
+  idButton,
   disabled,
   children,
   ...props
@@ -16,6 +18,7 @@ export function Button({
   return (
     <button
       {...props}
+      id={idButton + 'Button'}
       disabled={isLoading || disabled}
       className={cn(
         'bg-teal-900 hover:bg-teal-800 disabled:cursor-not-allowed disabled:bg-gray-100 px-6 h-12 rounded-2xl font-medium text-white transition-all active:bg-teal-950 flex items-center justify-center',

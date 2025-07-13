@@ -24,7 +24,12 @@ export default function Login() {
           error={errors.password?.message}
         />
 
-        <Button className='mt-2' type='submit' isLoading={isLoading}>
+        <Button
+          idButton='loginSubmit'
+          className='mt-2'
+          type='submit'
+          isLoading={isLoading}
+        >
           Entrar
         </Button>
       </form>

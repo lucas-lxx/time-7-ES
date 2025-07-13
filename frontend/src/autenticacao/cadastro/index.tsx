@@ -27,7 +27,12 @@ export default function Cadastro() {
           {...register('password')}
           error={errors.password?.message}
         />
-        <Button className='mt-2' type='submit' isLoading={isLoading}>
+        <Button
+          idButton='criarConta'
+          className='mt-2'
+          type='submit'
+          isLoading={isLoading}
+        >
           Criar Minha Conta
         </Button>
       </form>

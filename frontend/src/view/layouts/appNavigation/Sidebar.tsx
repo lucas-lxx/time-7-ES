@@ -96,7 +96,9 @@ function AppSidebar() {
           asChild
           className='bg-cor-principal hover:bg-cor-principal hover:opacity-90 hover:border-1 cursor-pointer'
         >
-          <Button onClick={signout}>Sair</Button>
+          <Button idButton='sairDaConta' onClick={signout}>
+            Sair
+          </Button>
         </SidebarMenuButton>
 
         <div className='text-center text-sm text-black'>
