@@ -18,7 +18,7 @@ export default function Recuperacao() {
           {...register('email')}
           error={errors.email?.message}
         />
-        <Button className='mt-2' type='submit'>
+        <Button idButton='recuperarSenha' className='mt-2' type='submit'>
           Solicitar Recuperação
         </Button>
       </form>
