@@ -5,41 +5,57 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
+  ParseUUIDPipe
 } from "@nestjs/common";
 import { ExpenseClassService } from "./expense_class.service";
 import { CreateExpenseClassDto } from "./dto/create-expense_class.dto";
 import { UpdateExpenseClassDto } from "./dto/update-expense_class.dto";
+import { UserId } from "src/shared/decorators/userId";
 
 @Controller("expense-class")
 export class ExpenseClassController {
   constructor(private readonly expenseClassService: ExpenseClassService) {}
 
   @Post()
-  create(@Body() createExpenseClassDto: CreateExpenseClassDto) {
-    return this.expenseClassService.create(createExpenseClassDto);
+  async create(
+    @UserId(ParseUUIDPipe) userId: string,
+    @Body() createExpenseClassDto: CreateExpenseClassDto
+  ) {
+    return await this.expenseClassService.create({
+      ...createExpenseClassDto,
+      userId
+    });
   }
 
   @Get()
-  findAll() {
-    return this.expenseClassService.findAll();
+  async findAll(@UserId(ParseUUIDPipe) userId: string) {
+    return await this.expenseClassService.findAll(userId);
   }
 
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.expenseClassService.findOne(id);
+  async findOne(
+    @Param("id") id: string,
+    @UserId(ParseUUIDPipe) userId: string
+  ) {
+    return await this.expenseClassService.findOne(id, userId);
   }
 
   @Patch(":id")
-  update(
+  async update(
+    @UserId(ParseUUIDPipe) userId: string,
     @Param("id") id: string,
     @Body() updateExpenseClassDto: UpdateExpenseClassDto
   ) {
-    return this.expenseClassService.update(id, updateExpenseClassDto);
+    return await this.expenseClassService.update(
+      id,
+      userId,
+      updateExpenseClassDto
+    );
   }
 
   @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.expenseClassService.remove(id);
+  async remove(@Param("id") id: string, @UserId(ParseUUIDPipe) userId: string) {
+    return await this.expenseClassService.remove(id, userId);
   }
 }

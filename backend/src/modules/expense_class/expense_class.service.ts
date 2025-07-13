@@ -6,27 +6,31 @@ import { PrismaService } from "src/shared/prisma/prisma.service";
 @Injectable()
 export class ExpenseClassService {
   constructor(private readonly prisma: PrismaService) {}
-  async create(createExpenseClassDto: CreateExpenseClassDto) {
+  async create(
+    createExpenseClassDto: CreateExpenseClassDto & { userId: string }
+  ) {
     const name = await this.prisma.expenseClass.create({
       data: {
         name: createExpenseClassDto.name,
         userId: createExpenseClassDto.userId
       }
     });
+
     return name;
   }
 
-  async findAll() {
+  async findAll(userId: string) {
     return await this.prisma.expenseClass.findMany({
+      where: { userId },
       orderBy: {
         id: "desc"
       }
     });
   }
 
-  async findOne(id: string) {
-    const expense = await this.prisma.expenseClass.findUnique({
-      where: { id }
+  async findOne(id: string, userId: string) {
+    const expense = await this.prisma.expenseClass.findFirst({
+      where: { id, userId }
     });
 
     if (!expense) {
@@ -36,9 +40,13 @@ export class ExpenseClassService {
     return expense;
   }
 
-  async update(id: string, updateExpenseClassDto: UpdateExpenseClassDto) {
-    const name = await this.prisma.expenseClass.findUnique({
-      where: { id }
+  async update(
+    id: string,
+    userId: string,
+    updateExpenseClassDto: UpdateExpenseClassDto
+  ) {
+    const name = await this.prisma.expenseClass.findFirst({
+      where: { id, userId }
     });
 
     if (!name) {
@@ -53,9 +61,9 @@ export class ExpenseClassService {
     });
   }
 
-  async remove(id: string) {
-    const expense = await this.prisma.expenseClass.findUnique({
-      where: { id }
+  async remove(id: string, userId: string) {
+    const expense = await this.prisma.expenseClass.findFirst({
+      where: { id, userId }
     });
 
     if (!expense) {
