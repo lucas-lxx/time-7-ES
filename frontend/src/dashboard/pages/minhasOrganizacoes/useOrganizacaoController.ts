@@ -55,6 +55,8 @@ export function useOrganizacaoController() {
     register,
     handleSubmit: hookFormSubmit,
     formState: { errors },
+
+    reset,
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const { mutateAsync, isPending: isLoading } = useMutation({
@@ -70,6 +72,8 @@ export function useOrganizacaoController() {
     try {
       await mutateAsync(payload);
       toast.success('Grupo criado');
+      reset();
+      setMembers([]);
     } catch {
       toast.error('Não foi possível criar Grupo');
     }
