@@ -16,10 +16,12 @@ const schema = z.object({
   description: z.string(),
 });
 
+/*
 interface organizationProps {
   name: string;
   description?: string | undefined;
 }
+*/
 
 type FormData = z.infer<typeof schema>;
 

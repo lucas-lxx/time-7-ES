@@ -3,14 +3,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+import { type categoriaType } from './FiguraCategoria';
+
 import { EllipsisVertical } from 'lucide-react';
 import FiguraCategoria from './FiguraCategoria';
 import Dropdown from './Dropdown';
 
-interface CardGastosProp {
+export interface CardGastosProp {
   titulo: string;
   data: string;
-  categoria: string;
+  categoria: categoriaType;
   preco: string;
   criadoPor: string;
 }
