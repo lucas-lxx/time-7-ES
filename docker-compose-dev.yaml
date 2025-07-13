@@ -1,4 +1,20 @@
 services:
+  front:
+    build:
+      context: ./frontend
+      dockerfile: "dev.dockerfile"
+      args:
+        - USER_ID=1000
+        - GROUP_ID=1000
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 5173:5173
+    env_file:
+      - ./frontend/.env
+    command: ["run", "dev"]
+    depends_on:
+      - back
   back:
     build:
       context: ./backend
