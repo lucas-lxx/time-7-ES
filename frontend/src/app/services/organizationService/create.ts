@@ -1,9 +1,11 @@
 import { httpClient } from '../httpClient';
 import { sleep } from '../../utils/sleep';
 
+export type permissionMember = 'EDIT' | 'VIEW';
+
 type objectMember = {
   userEmail: string;
-  permission: 'EDIT' | 'VIEW';
+  permission: permissionMember;
 };
 
 export interface organizationParams {

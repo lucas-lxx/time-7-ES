@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { organizationService } from '@/app/services/organizationService';
 import { type organizationParams } from '@/app/services/organizationService/create';
-//import { useAuth } from '../../../app/hooks/useAuth';
 
 const schema = z.object({
   name: z
@@ -15,13 +14,6 @@ const schema = z.object({
     .min(4, 'Mínimo 4 caracteres'),
   description: z.string(),
 });
-
-/*
-interface organizationProps {
-  name: string;
-  description?: string | undefined;
-}
-*/
 
 type FormData = z.infer<typeof schema>;
 
@@ -59,26 +51,25 @@ export function useOrganizacaoController() {
     reset,
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+  const queryClient = useQueryClient();
   const { mutateAsync, isPending: isLoading } = useMutation({
     mutationFn: (data: organizationParams) => organizationService.create(data),
   });
 
   const handleSubmit = hookFormSubmit(async (data) => {
-    const payload = {
-      ...data,
-      members,
-    };
-
     try {
-      await mutateAsync(payload);
+      await mutateAsync({
+        ...data,
+        members,
+      });
+      queryClient.invalidateQueries({ queryKey: ['organizationsIMemberOf'] });
+
       toast.success('Grupo criado');
       reset();
       setMembers([]);
     } catch {
       toast.error('Não foi possível criar Grupo');
     }
-
-    console.log('submit:', payload);
   });
 
   return {

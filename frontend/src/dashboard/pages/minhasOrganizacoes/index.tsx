@@ -1,7 +1,6 @@
-import { mockCardOrganization as mockData } from '@/mocks/MockCardOrganization';
+import DisplayOrganizacoes from './displayOrganizacoes';
 
-import CardOrganizacao from '../../components/CardOrganizacao';
-import FormularioOrganizacao from './components/FormularioOrganizacao';
+import FormularioOrganizacao from './creatOrganizacoes/components/FormularioOrganizacao';
 import SheetButton from '../../components/SheetButton';
 
 export default function MinhasOrganizacoes() {
@@ -16,17 +15,7 @@ export default function MinhasOrganizacoes() {
           sheetContent={<FormularioOrganizacao />}
         />
       </div>
-      <div className='flex flex-wrap px-4 gap-x-4 gap-y-6 max-sm:gap-y-1 max-sm:h-[85%] h-[90%] '>
-        {mockData.slice(0, 5).map((org) => (
-          <CardOrganizacao
-            key={org.id}
-            id={org.id}
-            title={org.title}
-            description={org.description}
-            date={org.date}
-          />
-        ))}
-      </div>
+      <DisplayOrganizacoes />
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import { Button } from '../../../../autenticacao/components/Button';
-import { Input } from '../../../../autenticacao/components/Input';
-import { TextArea } from '../../../../autenticacao/components/TextArea';
+import { Button } from '@/autenticacao/components/Button';
+import { Input } from '@/autenticacao/components/Input';
+import { TextArea } from '@/autenticacao/components/TextArea';
 
 import { MemberScrollArea } from './MemberScrollArea';
 
