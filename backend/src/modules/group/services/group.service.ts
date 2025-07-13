@@ -50,7 +50,8 @@ export class GroupService {
         description,
         groupUser: {
           createMany: {
-            data: added
+            data: added,
+            skipDuplicates: true
           }
         }
       }
