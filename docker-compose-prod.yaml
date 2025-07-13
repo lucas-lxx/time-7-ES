@@ -2,7 +2,7 @@ services:
   front:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: prod.dockerfile
       args:
         - USER_ID=1000
         - GROUP_ID=1000
@@ -17,7 +17,7 @@ services:
   back:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: prod.dockerfile
       args:
         - USER_ID=1000
         - GROUP_ID=1000
