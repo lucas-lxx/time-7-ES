@@ -20,6 +20,7 @@ export default function FormularioOrganizacao() {
     handleSubmit,
     register,
     errors,
+    isLoading,
 
     members,
     email,
@@ -60,6 +61,7 @@ export default function FormularioOrganizacao() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Button
+            type='button'
             onClick={handleAddMember}
             className='bg-sky-600 m-auto max-sm:m-0 max-sm:self-end text-sm px-4 h-9'
             isLoading={false}
@@ -74,7 +76,7 @@ export default function FormularioOrganizacao() {
           <Button
             className='mt-2 bg-sky-600 active:bg-sky-900'
             type='submit'
-            isLoading={false}
+            isLoading={isLoading}
           >
             Criar Minha Conta
           </Button>

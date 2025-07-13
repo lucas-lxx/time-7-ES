@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-//import { useMutation } from '@tanstack/react-query';
-//import { toast } from 'sonner';
-//import { organizationService } from '@/app/services/organizationService';
-//import { type organizationParams } from '@/app/services/organizationService/create';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { organizationService } from '@/app/services/organizationService';
+import { type organizationParams } from '@/app/services/organizationService/create';
 //import { useAuth } from '../../../app/hooks/useAuth';
 
 const schema = z.object({
@@ -57,11 +57,22 @@ export function useOrganizacaoController() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+  const { mutateAsync, isPending: isLoading } = useMutation({
+    mutationFn: (data: organizationParams) => organizationService.create(data),
+  });
+
   const handleSubmit = hookFormSubmit(async (data) => {
     const payload = {
       ...data,
       members,
     };
+
+    try {
+      await mutateAsync(payload);
+      toast.success('Grupo criado');
+    } catch {
+      toast.error('Não foi possível criar Grupo');
+    }
 
     console.log('submit:', payload);
   });
@@ -70,6 +81,7 @@ export function useOrganizacaoController() {
     handleSubmit,
     register,
     errors,
+    isLoading,
 
     members,
     email,
