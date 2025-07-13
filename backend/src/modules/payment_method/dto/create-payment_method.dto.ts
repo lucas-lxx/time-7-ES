@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsUUID } from "class-validator";
+import { IsString, IsOptional } from "class-validator";
 
 export class CreatePaymentMethodDto {
   @IsString()
@@ -10,7 +10,4 @@ export class CreatePaymentMethodDto {
   @IsOptional()
   @IsString()
   last4?: string;
-
-  @IsUUID()
-  userId: string;
 }

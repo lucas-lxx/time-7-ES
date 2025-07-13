@@ -5,41 +5,57 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
+  ParseUUIDPipe
 } from "@nestjs/common";
 import { PaymentMethodService } from "./payment_method.service";
 import { CreatePaymentMethodDto } from "./dto/create-payment_method.dto";
 import { UpdatePaymentMethodDto } from "./dto/update-payment_method.dto";
+import { UserId } from "src/shared/decorators/userId";
 
 @Controller("payment-method")
 export class PaymentMethodController {
   constructor(private readonly paymentMethodService: PaymentMethodService) {}
 
   @Post()
-  create(@Body() createPaymentMethodDto: CreatePaymentMethodDto) {
-    return this.paymentMethodService.create(createPaymentMethodDto);
+  async create(
+    @UserId(ParseUUIDPipe) userId: string,
+    @Body() createPaymentMethodDto: CreatePaymentMethodDto
+  ) {
+    return await this.paymentMethodService.create({
+      ...createPaymentMethodDto,
+      userId
+    });
   }
 
   @Get()
-  findAll() {
-    return this.paymentMethodService.findAll();
+  async findAll(@UserId(ParseUUIDPipe) userId: string) {
+    return await this.paymentMethodService.findAll(userId);
   }
 
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.paymentMethodService.findOne(id);
+  async findOne(
+    @Param("id") id: string,
+    @UserId(ParseUUIDPipe) userId: string
+  ) {
+    return await this.paymentMethodService.findOne(id, userId);
   }
 
   @Patch(":id")
-  update(
+  async update(
     @Param("id") id: string,
+    @UserId(ParseUUIDPipe) userId: string,
     @Body() updatePaymentMethodDto: UpdatePaymentMethodDto
   ) {
-    return this.paymentMethodService.update(id, updatePaymentMethodDto);
+    return await this.paymentMethodService.update(
+      id,
+      userId,
+      updatePaymentMethodDto
+    );
   }
 
   @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.paymentMethodService.remove(id);
+  async remove(@Param("id") id: string, @UserId(ParseUUIDPipe) userId: string) {
+    return await this.paymentMethodService.remove(id, userId);
   }
 }

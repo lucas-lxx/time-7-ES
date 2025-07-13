@@ -6,7 +6,9 @@ import { PrismaService } from "src/shared/prisma/prisma.service";
 @Injectable()
 export class PaymentMethodService {
   constructor(private readonly prisma: PrismaService) {}
-  async create(createPaymentMethodDto: CreatePaymentMethodDto) {
+  async create(
+    createPaymentMethodDto: CreatePaymentMethodDto & { userId: string }
+  ) {
     const payment = await this.prisma.paymentMethod.create({
       data: {
         type: createPaymentMethodDto.type,
@@ -18,17 +20,18 @@ export class PaymentMethodService {
     return payment;
   }
 
-  async findAll() {
+  async findAll(userId: string) {
     return await this.prisma.paymentMethod.findMany({
+      where: { userId },
       orderBy: {
         id: "desc"
       }
     });
   }
 
-  async findOne(id: string) {
-    const payment = await this.prisma.paymentMethod.findUnique({
-      where: { id }
+  async findOne(id: string, userId: string) {
+    const payment = await this.prisma.paymentMethod.findFirst({
+      where: { id, userId }
     });
 
     if (!payment) {
@@ -38,9 +41,13 @@ export class PaymentMethodService {
     return payment;
   }
 
-  async update(id: string, updatePaymentMethodDto: UpdatePaymentMethodDto) {
-    const payment = await this.prisma.paymentMethod.findUnique({
-      where: { id }
+  async update(
+    id: string,
+    userId: string,
+    updatePaymentMethodDto: UpdatePaymentMethodDto
+  ) {
+    const payment = await this.prisma.paymentMethod.findFirst({
+      where: { id, userId }
     });
 
     if (!payment) {
@@ -56,9 +63,9 @@ export class PaymentMethodService {
     });
   }
 
-  async remove(id: string) {
-    const payment = await this.prisma.paymentMethod.findUnique({
-      where: { id }
+  async remove(id: string, userId: string) {
+    const payment = await this.prisma.paymentMethod.findFirst({
+      where: { id, userId }
     });
 
     if (!payment) {
