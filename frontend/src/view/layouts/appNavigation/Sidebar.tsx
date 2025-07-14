@@ -57,7 +57,7 @@ const items = [
   },
   {
     title: 'Sobre',
-    endpoint: 'gosto',
+    endpoint: 'sobre',
     icon: CircleAlert,
   },
 ];

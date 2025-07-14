@@ -1,0 +1,44 @@
+.sobre-container {
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.logo-container {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-image {
+  max-width: 250px;
+  height: auto;
+  display: block;
+  margin: 0; /* remove margem para controle pelo container */
+}
+
+.description-container {
+  max-width: 600px;
+  margin-top: 1.5rem; /* espaço menor entre logo e texto */
+  margin-bottom: 3rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: center;
+  color: #555;
+}
+
+.sobre-footer {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #888;
+  text-align: center;
+  width: 100%;
+}
