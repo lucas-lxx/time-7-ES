@@ -13,9 +13,9 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 
-import { useOrganizacaoController } from '../useOrganizacaoController';
+import { useOrganizacaoController } from '@/dashboard/pages/minhasOrganizacoes/controller/useOrganizacaoController';
 
-export default function FormularioOrganizacao() {
+export default function EditFormularioOrganizacao() {
   const {
     handleSubmit,
     register,
@@ -32,11 +32,10 @@ export default function FormularioOrganizacao() {
   return (
     <SheetContent className='md:min-w-[40%] lg:min-w-[30%] max-sm:w-auto'>
       <SheetHeader>
-        <SheetTitle>Faça sua nova Organização</SheetTitle>
-        <SheetDescription>
-          Crie uma nova organização para gerenciar suas finanças pessoais ou
-          coletivas.
-        </SheetDescription>
+        <SheetTitle>
+          Você está editando <strong>Fulana</strong>
+        </SheetTitle>
+        <SheetDescription></SheetDescription>
       </SheetHeader>
 
       <form className='flex flex-col h-full gap-4 px-4' onSubmit={handleSubmit}>
@@ -80,7 +79,7 @@ export default function FormularioOrganizacao() {
             type='submit'
             isLoading={isLoading}
           >
-            Criar Minha Conta
+            Salvar
           </Button>
           <SheetClose asChild>
             <button>Fechar</button>

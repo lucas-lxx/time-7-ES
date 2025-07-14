@@ -1,10 +1,4 @@
-import { EllipsisVertical } from 'lucide-react';
-import Dropdown from '@/dashboard/pages/financeiro/components/Dropdown';
-
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import EdicaoCard from '@/dashboard/pages/minhasOrganizacoes/editOrganizacoes/components/EdicaoCard.tsx';
 
 import {
   Card,
@@ -23,6 +17,7 @@ interface CardProps {
 }
 
 export default function CardOrganizacao({
+  id,
   title,
   description,
   date,
@@ -40,20 +35,13 @@ export default function CardOrganizacao({
         />
       </CardContent>
       <CardHeader className=' my-0.5'>
-        <div className='flex justify-between pt-1 items-end'>
-          <CardTitle>{title}</CardTitle>
-          <DropdownMenu>
-            <DropdownMenuTrigger className=' '>
-              <EllipsisVertical />
-            </DropdownMenuTrigger>
-            <Dropdown />
-          </DropdownMenu>
-        </div>
+        <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
 
       <CardFooter className='text-xs text-gray-500'>
         Criado em {date}
+        <EdicaoCard idOrganizacao={id} />
       </CardFooter>
     </Card>
   );
