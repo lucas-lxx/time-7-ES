@@ -15,7 +15,7 @@ export async function signup(params: SignupParams) {
   await sleep(1000);
   const { data } = await httpClient.post<SignupResponse>(
     // 'auth/sign-up',
-    '/user',
+    'user',
     params,
   );
 
