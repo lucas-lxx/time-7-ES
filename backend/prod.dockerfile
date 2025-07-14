@@ -13,7 +13,6 @@
 
 FROM node:22-bookworm AS builder
 
-USER node
 WORKDIR /app
 
 COPY package*.json ./
@@ -22,18 +21,20 @@ RUN npm install
 
 # Copy source and build
 COPY . .
+RUN npx prisma generate
 RUN npm run build
 
 # --- Production Image ---
 FROM node:22-bookworm AS production
 
-USER node
 WORKDIR /app
 # Only copy built app and prod dependencies
 COPY package*.json ./
 RUN npm install --omit=dev
 
 COPY --from=builder /app/dist ./dist
-COPY prisma ./prisma
+COPY --from=builder /app/prisma ./prisma
+RUN npx prisma generate
 
-CMD ["npx", "prisma", "migrate", "deploy", "&&", "node", "dist/main"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
+
