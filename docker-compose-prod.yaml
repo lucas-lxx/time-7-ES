@@ -1,15 +1,16 @@
 services:
-  front:
+  nginx:
     build:
       context: ./frontend
       dockerfile: prod.dockerfile
       args:
         - USER_ID=1000
         - GROUP_ID=1000
-    volumes:
-      - ./frontend:/app
     environment:
       - NODE_ENV=production
+    ports:
+      - 80:80
+      - 443:443
     env_file:
       - ./frontend/production.env
     depends_on:
@@ -27,26 +28,5 @@ services:
       - NODE_ENV=production
     env_file:
       - ./backend/production.env
-    depends_on:
-      - postgres
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - ./nginx:/etc/nginx
-      - ./frontend/dist:/usr/share/nginx/html
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - front
-      - back
-  postgres:
-    image: "postgres:17"
-    env_file:
-      - ./backend/.env
-    ports:
-      - 7000:5432
-    volumes:
-      - es_app:/var/lib/postgresql/data
 volumes:
   es_app:
