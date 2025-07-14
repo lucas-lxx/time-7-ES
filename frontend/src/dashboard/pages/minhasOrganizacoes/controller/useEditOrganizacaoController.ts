@@ -22,7 +22,7 @@ export type objectMember = {
   permission: 'EDIT' | 'VIEW';
 };
 
-export function useOrganizacaoController() {
+export function useEditOrganizacaoController() {
   const [members, setMembers] = useState<objectMember[]>([]);
   const [email, setEmail] = useState('');
 
@@ -72,6 +72,25 @@ export function useOrganizacaoController() {
     }
   });
 
+  //não mexer
+  const { mutateAsync: removeOrganization, isPending: isLoadingDelete } =
+    useMutation({
+      mutationFn: (data: string) => organizationService.deleteGroup(data),
+    });
+
+  //não mexer
+  async function handleDeleteOrganization(id: string) {
+    try {
+      await removeOrganization(id);
+
+      queryClient.invalidateQueries({ queryKey: ['organizationsIMemberOf'] });
+
+      toast.success('Organização foi deletada');
+    } catch {
+      toast.error('Não foi possível deletar a conta');
+    }
+  }
+
   return {
     handleSubmit,
     register,
@@ -83,5 +102,9 @@ export function useOrganizacaoController() {
     setEmail,
     handleAddMember,
     handleRemoveMember,
+
+    // não mexer
+    handleDeleteOrganization,
+    isLoadingDelete,
   };
 }

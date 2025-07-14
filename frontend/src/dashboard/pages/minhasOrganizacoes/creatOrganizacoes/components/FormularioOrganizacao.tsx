@@ -13,7 +13,7 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 
-import { useOrganizacaoController } from '../useOrganizacaoController';
+import { useOrganizacaoController } from '../../controller/useOrganizacaoController';
 
 export default function FormularioOrganizacao() {
   const {
