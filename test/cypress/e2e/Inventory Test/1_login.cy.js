@@ -8,9 +8,18 @@ describe('Login', () => {
         cy.visit(url);
     })
 
-    it('Should log in successfully', () => {
-        loginPage.loginValid();
-        //loginPage.CheckPage();
+    it('#1 Should log in Invalid', () => {
+        loginPage.loginInvalid();
+        loginPage.CheckPageInvalid();
     });
+
+    it('#2 Should log in successfully', () => {
+        loginPage.loginValid();
+        loginPage.CheckPageValid();
+    });
+
+    
+
+    
     
 })
