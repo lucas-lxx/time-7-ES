@@ -27,7 +27,7 @@ export const mockCardGasto: mockCardGastoProps[] = [
     data: '05/07/2024',
     categoria: 'DEBITO',
     preco: '120.75',
-    criadoPor: 'Carlos',
+    criadoPor: 'Ana',
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ export const mockCardGasto: mockCardGastoProps[] = [
     data: '03/07/2024',
     categoria: 'DEBITO',
     preco: '58.90',
-    criadoPor: 'Paulo',
+    criadoPor: 'Ana',
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ export const mockCardGasto: mockCardGastoProps[] = [
     data: '01/07/2024',
     categoria: 'PIX',
     preco: '950.00',
-    criadoPor: 'Lucas',
+    criadoPor: 'João',
   },
   {
     id: 7,
@@ -59,7 +59,7 @@ export const mockCardGasto: mockCardGastoProps[] = [
     data: '30/06/2024',
     categoria: 'CREDITO',
     preco: '28.45',
-    criadoPor: 'Bruna',
+    criadoPor: 'Lucas',
   },
   {
     id: 8,
@@ -67,7 +67,7 @@ export const mockCardGasto: mockCardGastoProps[] = [
     data: '29/06/2024',
     categoria: 'DEBITO',
     preco: '15.00',
-    criadoPor: 'Roberto',
+    criadoPor: 'Lucas',
   },
   {
     id: 9,
@@ -75,7 +75,7 @@ export const mockCardGasto: mockCardGastoProps[] = [
     data: '28/06/2024',
     categoria: 'PIX',
     preco: '300.00',
-    criadoPor: 'Juliana',
+    criadoPor: 'Ana',
   },
   {
     id: 10,
@@ -83,6 +83,6 @@ export const mockCardGasto: mockCardGastoProps[] = [
     data: '27/06/2024',
     categoria: 'CREDITO',
     preco: '39.90',
-    criadoPor: 'Tiago',
+    criadoPor: 'Ana',
   },
 ];
