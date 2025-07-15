@@ -29,6 +29,12 @@ export function useOrganizacaoController() {
   const handleAddMember = () => {
     if (!email) return;
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      console.error('E-mail inválido');
+      return;
+    }
+
     const member: objectMember = {
       userEmail: email,
       permission: 'EDIT', // ou VIEW se quiser alternar
