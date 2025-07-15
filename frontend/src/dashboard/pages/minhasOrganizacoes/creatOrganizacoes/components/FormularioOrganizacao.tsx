@@ -32,7 +32,7 @@ export default function FormularioOrganizacao() {
   return (
     <SheetContent className='md:min-w-[40%] lg:min-w-[30%] max-sm:w-auto'>
       <SheetHeader>
-        <SheetTitle>Faça sua nova Organização</SheetTitle>
+        <SheetTitle>Faça seu novo Grupo</SheetTitle>
         <SheetDescription>
           Crie uma nova organização para gerenciar suas finanças pessoais ou
           coletivas.
@@ -80,7 +80,7 @@ export default function FormularioOrganizacao() {
             type='submit'
             isLoading={isLoading}
           >
-            Criar Minha Conta
+            Criar Grupo
           </Button>
           <SheetClose asChild>
             <button>Fechar</button>
