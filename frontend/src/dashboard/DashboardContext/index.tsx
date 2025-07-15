@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useState } from 'react';
 import { type organizationResponse } from '@/app/services/organizationService/getAll.ts';
 
 interface DashboardContextValue {
@@ -15,7 +15,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
   const selectOrganization = (org: organizationResponse) => {
     setSelectedOrganization(org);
-    console.log('context:', { org });
+    //console.log('contextArquivo:', { org });
   };
 
   const clearSelectedOrganization = () => setSelectedOrganization(null);
