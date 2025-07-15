@@ -79,7 +79,7 @@ function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    className={`${currentPath === item.endpoint ? 'bg-cor-principal hover:bg-cor-principal' : 'hover:border-1 hover:border-cor-principal'} `}
+                    className={`${currentPath === item.endpoint ? 'bg-sky-400 hover:bg-sky-400' : 'hover:border-1 hover:border-skybg-sky-400'} `}
                   >
                     <Link to={item.endpoint}>
                       <item.icon />
@@ -95,7 +95,7 @@ function AppSidebar() {
       <SidebarFooter>
         <SidebarMenuButton
           asChild
-          className='bg-cor-principal hover:bg-cor-principal hover:opacity-90 hover:border-1 cursor-pointer'
+          className='bg-sky-600 hover:bg-sky-400 hover:opacity-90 hover:border-1 cursor-pointer'
         >
           <Button idButton='sairDaConta' onClick={signout}>
             Sair
