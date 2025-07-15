@@ -20,10 +20,10 @@ interface EditFormularioOrganizacaoProps {
   organizacao: organizationResponse;
 }
 
-export default function EditFormularioOrganizacao(
-  organizacao: EditFormularioOrganizacaoProps,
-) {
-  const name = 'MOCKADÃO YURI';
+export default function EditFormularioOrganizacao({
+  organizacao,
+}: EditFormularioOrganizacaoProps) {
+  const { name } = organizacao;
   const {
     handleSubmit,
     register,
