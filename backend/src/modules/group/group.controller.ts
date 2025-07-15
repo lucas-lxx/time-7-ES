@@ -61,7 +61,6 @@ export class GroupController {
       userId,
       createGroupDto
     );
-    console.log("asdf");
 
     if (errors.length > 0) {
       res.status(207).json({
@@ -115,15 +114,27 @@ export class GroupController {
   }
 
   @ApiOperation({
-    summary: "Update group by id of the logged user, pass data on body"
+    summary: "Update group by id, pass data on body"
   })
-  @Patch(":id")
+  @ApiBody({
+    description: "Fields to update in the group",
+    schema: {
+      example: {
+        name: "Updated Group Name",
+        description: "This is an optional updated description",
+        members: [
+          { userEmail: "newuser@example.com", permission: "VIEW" },
+          { userEmail: "otheruser@example.com", permission: "EDIT" }
+        ]
+      }
+    }
+  })
+  @Patch(":groupId")
   async update(
-    @UserId(ParseUUIDPipe) userId: string,
-    @Param("id", ParseUUIDPipe) groupId: string,
+    @Param("groupId", ParseUUIDPipe) groupId: string,
     @Body() updateGroupDto: UpdateGroupDto
   ) {
-    return await this.groupService.update(userId, groupId, updateGroupDto);
+    return await this.groupService.update(groupId, updateGroupDto);
   }
 
   @ApiOperation({

@@ -127,23 +127,111 @@ export class GroupService {
     });
   }
 
-  async update(
-    userId: string,
-    groupId: string,
-    updateGroupDto: UpdateGroupDto
-  ) {
-    return await this.prismaService.group.update({
-      data: updateGroupDto,
-      where: {
-        id: groupId,
-        AND: {
-          groupUser: {
-            some: { userId }
-          }
+  async update(groupId: string, updateDto: UpdateGroupDto) {
+    const { name, description, members } = updateDto;
+
+    const dataToUpdate: any = {};
+    if (name !== undefined) dataToUpdate.name = name;
+    if (description !== undefined) dataToUpdate.description = description;
+
+    let added: { userId: string; permission: Permission }[] = [];
+    const errors: string[] = [];
+
+    if (members?.length) {
+      const emails = members.map(m => m.userEmail);
+      const usersData = await this.userService.findByEmails(emails);
+
+      const emailToId = new Map(usersData.map(u => [u.email, u.id]));
+
+      for (const member of members) {
+        const uuid = emailToId.get(member.userEmail);
+
+        if (!uuid) {
+          errors.push(member.userEmail);
+          continue;
         }
+
+        added.push({
+          userId: uuid,
+          permission: member.permission
+        });
       }
+    }
+
+    // Update group name/description if provided
+    const group = await this.prismaService.group.update({
+      where: { id: groupId },
+      data: dataToUpdate
     });
+
+    // Add new members if any
+    if (added.length) {
+      await this.prismaService.groupUser.createMany({
+        data: added.map(user => ({
+          groupId,
+          ...user
+        })),
+        skipDuplicates: true
+      });
+    }
+
+    return { errors, group };
   }
+
+  // async update(groupId: string, updateGroupDto: UpdateGroupDto) {
+  //   // return await this.prismaService.group.update({
+  //   //   data: updateGroupDto,
+  //   //   where: {
+  //   //     id: groupId,
+  //   //     AND: {
+  //   //       groupUser: {
+  //   //         some: { userId }
+  //   //       }
+  //   //     }
+  //   //   }
+  //   // });
+
+  //   const { name, description, members } = updateGroupDto;
+  //   const errors: string[] = [];
+  //   const added: { userId: string; permission: Permission }[] = [];
+  //   if (members) {
+  //     const emails = members.map(member => member.userEmail);
+  //     const usersData = await this.userService.findByEmails(emails);
+
+  //     const emailToId = new Map(usersData.map(user => [user.email, user.id]));
+  //     for (const member of members) {
+  //       const uuid = emailToId.get(member.userEmail);
+
+  //       if (!uuid) {
+  //         errors.push(member.userEmail);
+  //         continue;
+  //       }
+
+  //       added.push({
+  //         userId: uuid,
+  //         permission: member.permission
+  //       });
+  //     }
+  //   }
+
+  //   const group = await this.prismaService.group.update({
+  //     // data: {
+  //     //   ownerId: userId,
+  //     //   name,
+  //     //   description,
+  //     //   groupUser: {
+  //     //     createMany: {
+  //     //       data: added,
+  //     //       skipDuplicates: true
+  //     //     }
+  //     //   }
+  //     // }
+  //     where: { id: groupId },
+  //     data: { name: name, description: description, groupUser: {updateMany: {}} }
+  //   });
+
+  //   return { errors, group };
+  // }
 
   async remove(userId: string, groupId: string) {
     return await this.prismaService.group.delete({
