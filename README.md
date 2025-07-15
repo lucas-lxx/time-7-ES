@@ -26,22 +26,27 @@ A plataforma permite que os usuários:
 #### Pré-requisitos
 
 Antes de começar, certifique-se de que você tem as seguintes ferramentas instaladas em sua máquina:
-[...]
+- [Node.js](https://nodejs.org/) 
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
 
 1.  **Clone o repositório:**
 
 ```bash
-    git clone [https://github.com/seu-usuario/seu-projeto.git](https://github.com/seu-usuario/seu-projeto.git)
+    git clone [LINK-DO-REPOSITÓRIO]
 ```
 
-2.  **Acesse o diretório do projeto:**
+2.  **Execute o backend:**
 
 ```bash
-  cd seu-projeto
+  sudo docker compose up --build
 ```
 
-3.  **Instale as dependências:**
+3.  **Execute o frontend:**
 
 ```bash
-  alguma coisa
+  cd frontend
+  npm install
+  npm run dev
 ```
