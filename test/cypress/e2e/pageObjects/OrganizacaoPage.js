@@ -29,7 +29,13 @@ class OrganizacaoPage{
 
     organizacaoExcluir(){
         cy.wait(2000);
-        cy.get('.flex-wrap').children().eq(0).find('.lucide-trash').click()
+        //cy.get('.flex-wrap > :nth-child(1) > .flex > div').children().eq(0).find('.lucide-trash').click({force: true})
+        cy.get('.flex-wrap > :nth-child(1)')
+            .trigger('mouseover') // simula o hover
+            .within(() => {
+            cy.get('.absolute > .hover\\:bg-red-100').click({ force: true });
+            });
+
         cy.get(organizacaoElements.BtnExcluir()).click();
     }
 
