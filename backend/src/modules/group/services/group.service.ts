@@ -137,20 +137,41 @@ export class GroupService {
     let added: { userId: string; permission: Permission }[] = [];
     const errors: string[] = [];
 
-    if (members?.length) {
-      const emails = members.map(m => m.userEmail);
-      const usersData = await this.userService.findByEmails(emails);
+    // Get group including owner and current users
+    const group = await this.prismaService.group.findUnique({
+      where: { id: groupId },
+      include: {
+        groupUser: true,
+        owner: true
+      }
+    });
 
-      const emailToId = new Map(usersData.map(u => [u.email, u.id]));
+    if (!group) throw new Error("Group not found");
 
-      for (const member of members) {
-        const uuid = emailToId.get(member.userEmail);
+    const ownerId = group.ownerId;
 
-        if (!uuid) {
-          errors.push(member.userEmail);
-          continue;
-        }
+    const currentUserIds = new Set(group.groupUser.map(gu => gu.userId));
 
+    const newUserEmails = members?.map(m => m.userEmail) || [];
+
+    const usersData = await this.userService.findByEmails(newUserEmails);
+    const emailToId = new Map(usersData.map(u => [u.email, u.id]));
+
+    const newUserIds = new Set<string>();
+    const userIdToPermission = new Map<string, Permission>();
+
+    for (const member of members || []) {
+      const uuid = emailToId.get(member.userEmail);
+
+      if (!uuid) {
+        errors.push(member.userEmail);
+        continue;
+      }
+
+      newUserIds.add(uuid);
+      userIdToPermission.set(uuid, member.permission);
+
+      if (!currentUserIds.has(uuid)) {
         added.push({
           userId: uuid,
           permission: member.permission
@@ -158,13 +179,27 @@ export class GroupService {
       }
     }
 
-    // Update group name/description if provided
-    const group = await this.prismaService.group.update({
+    // Remove users who are no longer in the list, except the owner
+    const userIdsToRemove = group.groupUser
+      .filter(gu => gu.userId !== ownerId && !newUserIds.has(gu.userId))
+      .map(gu => gu.userId);
+
+    if (userIdsToRemove.length > 0) {
+      await this.prismaService.groupUser.deleteMany({
+        where: {
+          groupId,
+          userId: { in: userIdsToRemove }
+        }
+      });
+    }
+
+    // Update name/description
+    const updatedGroup = await this.prismaService.group.update({
       where: { id: groupId },
       data: dataToUpdate
     });
 
-    // Add new members if any
+    // Add new users
     if (added.length) {
       await this.prismaService.groupUser.createMany({
         data: added.map(user => ({
@@ -175,63 +210,10 @@ export class GroupService {
       });
     }
 
-    return { errors, group };
+    console.log(group);
+
+    return { errors, group: updatedGroup };
   }
-
-  // async update(groupId: string, updateGroupDto: UpdateGroupDto) {
-  //   // return await this.prismaService.group.update({
-  //   //   data: updateGroupDto,
-  //   //   where: {
-  //   //     id: groupId,
-  //   //     AND: {
-  //   //       groupUser: {
-  //   //         some: { userId }
-  //   //       }
-  //   //     }
-  //   //   }
-  //   // });
-
-  //   const { name, description, members } = updateGroupDto;
-  //   const errors: string[] = [];
-  //   const added: { userId: string; permission: Permission }[] = [];
-  //   if (members) {
-  //     const emails = members.map(member => member.userEmail);
-  //     const usersData = await this.userService.findByEmails(emails);
-
-  //     const emailToId = new Map(usersData.map(user => [user.email, user.id]));
-  //     for (const member of members) {
-  //       const uuid = emailToId.get(member.userEmail);
-
-  //       if (!uuid) {
-  //         errors.push(member.userEmail);
-  //         continue;
-  //       }
-
-  //       added.push({
-  //         userId: uuid,
-  //         permission: member.permission
-  //       });
-  //     }
-  //   }
-
-  //   const group = await this.prismaService.group.update({
-  //     // data: {
-  //     //   ownerId: userId,
-  //     //   name,
-  //     //   description,
-  //     //   groupUser: {
-  //     //     createMany: {
-  //     //       data: added,
-  //     //       skipDuplicates: true
-  //     //     }
-  //     //   }
-  //     // }
-  //     where: { id: groupId },
-  //     data: { name: name, description: description, groupUser: {updateMany: {}} }
-  //   });
-
-  //   return { errors, group };
-  // }
 
   async remove(userId: string, groupId: string) {
     return await this.prismaService.group.delete({
