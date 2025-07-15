@@ -15,9 +15,9 @@ A plataforma permite que os usuários:
 **Equipe de desenvolvimento:**
 
 - [Júlio Mateus Morais](https://github.com/eujuliomorais)
-- [Lucas Almeida Barbosa](https://github.com/lucas-lxx).
-- [Matheus Moreira Nobre](https://github.com/MatheusNobreM).
-- [Yuri Lima R. de Oliveira](https://github.com/DevYuriOliveira73).
+- [Lucas Almeida Barbosa](https://github.com/lucas-lxx)
+- [Matheus Moreira Nobre](https://github.com/MatheusNobreM)
+- [Yuri Lima R. de Oliveira](https://github.com/DevYuriOliveira73)
 
 <hr>
 
@@ -33,19 +33,19 @@ Antes de começar, certifique-se de que você tem as seguintes ferramentas insta
 <br>
 
 1.  **Clonar repositório:**<br>
-Execute o seguinte comando para clonar o repositório:
+- Execute o seguinte comando para clonar o repositório:
 ```bash
     git clone [LINK-DO-REPOSITÓRIO]
 ```
 
 2.  **Executar o backend:**<br>
-Execute o seguinte comando para subir os containers do backend:
+- Execute o seguinte comando para subir os containers do backend:
 ```bash
   sudo docker compose up --build
 ```
 
 3.  **Execute o frontend:**<br>
-Executes os seguintes comandos para respectivamente naveguar até o diretório frontend, instalar as bibliotecas e pacotes necessários e inicia o servidor de desenvolvimento do VITE:
+- Executes os seguintes comandos para respectivamente naveguar até o diretório frontend, instalar as bibliotecas e pacotes necessários e iniciar o servidor de desenvolvimento do VITE:
 ```bash
   cd frontend
   npm install
