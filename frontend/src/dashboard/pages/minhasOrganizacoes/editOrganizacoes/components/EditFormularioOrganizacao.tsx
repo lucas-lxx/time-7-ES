@@ -1,6 +1,7 @@
 import { Button } from '@/autenticacao/components/Button';
 import { Input } from '@/autenticacao/components/Input';
 import { TextArea } from '@/autenticacao/components/TextArea';
+import { type organizationResponse } from '@/app/services/organizationService/getAll.ts';
 
 import { MemberScrollArea } from './MemberScrollArea';
 
@@ -15,7 +16,14 @@ import {
 
 import { useOrganizacaoController } from '@/dashboard/pages/minhasOrganizacoes/controller/useOrganizacaoController';
 
-export default function EditFormularioOrganizacao() {
+interface EditFormularioOrganizacaoProps {
+  organizacao: organizationResponse;
+}
+
+export default function EditFormularioOrganizacao(
+  organizacao: EditFormularioOrganizacaoProps,
+) {
+  const name = 'MOCKADÃO YURI';
   const {
     handleSubmit,
     register,
@@ -33,7 +41,7 @@ export default function EditFormularioOrganizacao() {
     <SheetContent className='md:min-w-[40%] lg:min-w-[30%] max-sm:w-auto'>
       <SheetHeader>
         <SheetTitle>
-          Você está editando <strong>Fulana</strong>
+          Você está editando <strong>{name}</strong>
         </SheetTitle>
         <SheetDescription></SheetDescription>
       </SheetHeader>
