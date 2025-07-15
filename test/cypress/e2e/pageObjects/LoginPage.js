@@ -19,12 +19,12 @@ class LoginPage{
         cy.contains('Entrar').click();
     }
 
-    CheckPageInvalid() {
+    checkPageInvalid() {
         cy.wait(2000);
         cy.get(".text-cor-principal").should('contain', 'Acesse sua Conta');
     }
 
-    CheckPageValid() {
+    checkPageValid() {
         cy.wait(2000);
         cy.get(".text-center").should('contain', 'Supimpas');
     }

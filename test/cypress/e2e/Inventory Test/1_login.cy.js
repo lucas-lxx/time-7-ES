@@ -8,14 +8,14 @@ describe('Login', () => {
         cy.visit(url);
     })
 
-    it('#1 Should log in Invalid', () => {
+    it('#1 Login Invalido', () => {
         loginPage.loginInvalid();
-        loginPage.CheckPageInvalid();
+        loginPage.checkPageInvalid();
     });
 
-    it('#2 Should log in successfully', () => {
+    it('#2 Login Valido', () => {
         loginPage.loginValid();
-        loginPage.CheckPageValid();
+        loginPage.checkPageValid();
     });
 
     

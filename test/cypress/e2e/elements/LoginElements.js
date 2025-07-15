@@ -1,5 +1,5 @@
-class LogineElements{
+class LoginElements{
    User = () => '#email';
    Password = () => '#password';
 }
-export default LogineElements;
+export default LoginElements;
