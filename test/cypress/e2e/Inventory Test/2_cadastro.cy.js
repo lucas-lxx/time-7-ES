@@ -8,12 +8,12 @@ describe('Cadastro', () => {
         cy.visit(url);
     })
 
-    it('#1 Must make invalid registration', () => {
+    it('#1 Cadastro Valido', () => {
         cadastroPage.cadastroInvalid();
         cadastroPage.checkPageInvalid();
     });
 
-    it('#2 Must make valid registration', () => {
+    it('#2 Cadastro Invalido', () => {
         cadastroPage.cadastroValid();
         //cadastroPage.checkPageValid();
     });

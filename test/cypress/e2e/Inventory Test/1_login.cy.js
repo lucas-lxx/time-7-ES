@@ -17,9 +17,5 @@ describe('Login', () => {
         loginPage.loginValid();
         loginPage.checkPageValid();
     });
-
-    
-
-    
     
 })
