@@ -29,22 +29,23 @@ Antes de começar, certifique-se de que você tem as seguintes ferramentas insta
 - [Node.js](https://nodejs.org/) 
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
+<br>
+<br>
 
-
-1.  **Clone o repositório:**
-
+1.  **Clonar repositório:**
+Execute o seguinte comando para clonar o repositório:
 ```bash
     git clone [LINK-DO-REPOSITÓRIO]
 ```
 
-2.  **Execute o backend:**
-
+2.  **Executar o backend**
+Execute o seguinte comando para subir os containers do backend:
 ```bash
   sudo docker compose up --build
 ```
 
 3.  **Execute o frontend:**
-
+Executes os seguintes comandos para respectivamente naveguar até o diretório frontend, instalar as bibliotecas e pacotes necessários e inicia o servidor de desenvolvimento do VITE:
 ```bash
   cd frontend
   npm install
