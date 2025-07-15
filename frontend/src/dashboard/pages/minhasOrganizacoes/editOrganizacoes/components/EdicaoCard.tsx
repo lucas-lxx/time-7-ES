@@ -15,7 +15,7 @@ export default function EdicaoCard({ id }: EdicaoCardProp) {
 
   if (!selectedOrganization) {
     return (
-      <div className='absolute top-2 right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+      <div className='absolute top-2 right-2 flex gap-2 z-10 group-hover:opacity-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200'>
         <button className='p-1 rounded hover:bg-red-100'>
           <Trash size={16} className='text-red-600' />
         </button>
