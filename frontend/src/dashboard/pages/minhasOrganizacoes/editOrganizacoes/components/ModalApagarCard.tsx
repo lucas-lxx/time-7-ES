@@ -8,7 +8,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 
-import { useEditOrganizacaoController } from '@/dashboard/pages/minhasOrganizacoes/controller/useEditOrganizacaoController';
+import { useOrganizacaoController } from '@/dashboard/pages/minhasOrganizacoes/controller/useOrganizacaoController';
 
 interface ModalApagarCardPros {
   idOrganizacao: string;
@@ -18,7 +18,7 @@ export default function ModalApagarCard({
   idOrganizacao,
 }: ModalApagarCardPros) {
   const { /*isLoadingDelete,*/ handleDeleteOrganization } =
-    useEditOrganizacaoController();
+    useOrganizacaoController();
   return (
     <AlertDialogContent>
       <AlertDialogHeader>

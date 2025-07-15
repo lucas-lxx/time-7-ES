@@ -33,8 +33,8 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
       value={{
         toSearchOrganization,
         clearSelectedOrganization,
-        selectOrganization,
-        selectedOrganization,
+        selectOrganization, //FUNÇÃO
+        selectedOrganization, //VALOR
       }}
     >
       {children}

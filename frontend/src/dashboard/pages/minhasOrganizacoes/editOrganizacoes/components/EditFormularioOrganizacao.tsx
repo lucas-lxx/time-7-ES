@@ -4,7 +4,7 @@ import { Input } from '@/autenticacao/components/Input';
 import { TextArea } from '@/autenticacao/components/TextArea';
 import { type organizationResponse } from '@/app/services/organizationService/getAll.ts';
 
-import { MemberScrollArea } from './MemberScrollArea';
+import { MemberScrollArea } from '@/dashboard/pages/minhasOrganizacoes/creatOrganizacoes/components/MemberScrollArea';
 
 import {
   SheetClose,
@@ -26,10 +26,10 @@ export default function EditFormularioOrganizacao({
 }: EditFormularioOrganizacaoProps) {
   const { name } = organizacao;
   const {
-    handleSubmit,
+    handleEditSubmit,
     register,
     errors,
-    isLoading,
+    isLoadingEdit,
     reset,
 
     preencherEmailFormulario,
@@ -58,7 +58,10 @@ export default function EditFormularioOrganizacao({
         <SheetDescription></SheetDescription>
       </SheetHeader>
 
-      <form className='flex flex-col h-full gap-4 px-4' onSubmit={handleSubmit}>
+      <form
+        className='flex flex-col h-full gap-4 px-4'
+        onSubmit={handleEditSubmit}
+      >
         <Input
           type='name'
           placeholder='Nome da Organização'
@@ -97,7 +100,7 @@ export default function EditFormularioOrganizacao({
             idButton='editarOrganizacao'
             className='mt-2 bg-sky-600 active:bg-sky-900'
             type='submit'
-            isLoading={isLoading}
+            isLoading={isLoadingEdit}
           >
             Salvar
           </Button>
