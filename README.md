@@ -32,19 +32,19 @@ Antes de começar, certifique-se de que você tem as seguintes ferramentas insta
 <br>
 <br>
 
-1.  **Clonar repositório:**
+1.  **Clonar repositório:**<br>
 Execute o seguinte comando para clonar o repositório:
 ```bash
     git clone [LINK-DO-REPOSITÓRIO]
 ```
 
-2.  **Executar o backend**
+2.  **Executar o backend:**<br>
 Execute o seguinte comando para subir os containers do backend:
 ```bash
   sudo docker compose up --build
 ```
 
-3.  **Execute o frontend:**
+3.  **Execute o frontend:**<br>
 Executes os seguintes comandos para respectivamente naveguar até o diretório frontend, instalar as bibliotecas e pacotes necessários e inicia o servidor de desenvolvimento do VITE:
 ```bash
   cd frontend
