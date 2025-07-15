@@ -4,7 +4,7 @@ import AppNavigation from '../view/layouts/appNavigation';
 
 import Cadastro from '../autenticacao/cadastro';
 import Login from '../autenticacao/login';
-import Coringa from '../autenticacao/components/Coringa';
+import { PageManutencao } from '@/view/components/PageManutencao.tsx';
 import Recuperacao from '../autenticacao/recuperacao';
 import MinhasOrganizacoes from '../dashboard/pages/minhasOrganizacoes';
 import Financeiro from '../dashboard/pages/financeiro';
@@ -27,9 +27,10 @@ export default function Router() {
         <Route element={<AuthGuard isPrivate={true} />}>
           <Route element={<AppNavigation />}>
             <Route path='/organization' element={<MinhasOrganizacoes />} />
-            <Route path='/gosto' element={<Coringa />} />
+            <Route path='/gosto' element={<PageManutencao />} />
             <Route path='/financeiro' element={<Financeiro />} />
             <Route path='/sobre' element={<Sobre />} />
+            <Route path='/gosto1' element={<PageManutencao />} />
           </Route>
         </Route>
       </Routes>

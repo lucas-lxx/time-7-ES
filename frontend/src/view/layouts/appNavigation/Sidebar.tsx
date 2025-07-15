@@ -7,9 +7,10 @@ import {
   House,
   ClipboardList,
   ChartLine,
-  ShieldQuestionMark,
+  //ShieldQuestionMark,
+  HandCoins,
   Bolt,
-  CircleAlert,
+  //CircleAlert,
 } from 'lucide-react';
 
 import {
@@ -27,39 +28,39 @@ import {
 const items = [
   {
     title: 'Início',
-    endpoint: 'gosto',
+    endpoint: 'sobre',
     icon: House,
   },
   {
-    title: 'Organizações',
+    title: 'Meus Grupos',
     endpoint: 'organization',
     icon: ClipboardList,
   },
   {
-    title: 'TEMPORÁRIO',
+    title: 'Gasto do Grupo',
     endpoint: 'financeiro',
-    icon: ShieldQuestionMark,
+    icon: HandCoins,
   },
   {
     title: 'Gráficos',
     endpoint: 'gosto',
     icon: ChartLine,
   },
-  {
+  /*{
     title: 'Categorias',
     endpoint: 'gosto',
     icon: ShieldQuestionMark,
-  },
+  },*/
   {
     title: 'Configurações',
-    endpoint: 'gosto',
+    endpoint: 'gosto1',
     icon: Bolt,
   },
-  {
+  /*{
     title: 'Sobre',
-    endpoint: 'sobre',
+    endpoint: 'gosto',
     icon: CircleAlert,
-  },
+  },*/
 ];
 
 function AppSidebar() {
