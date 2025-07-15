@@ -24,11 +24,10 @@ describe('Organização', () => {
         organizacaoPage.organizacaoValidarInvalida();
     });
 
-    it.only('#3 Excluir Organização', () => {
+    it('#3 Excluir Organização', () => {
         loginPage.loginValid();
         organizacaoPage.organizacaoExcluir();
-        organizacaoPage.organizacaoExcluirValidar();
-        
+        organizacaoPage.organizacaoExcluirValidar(); 
     });
     
     
