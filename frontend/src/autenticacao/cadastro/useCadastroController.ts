@@ -1,5 +1,7 @@
+//import { useAuth } from '@/app/hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 
@@ -7,7 +9,7 @@ import { authService } from '@/app/services/authService';
 import { type SignupParams } from '@/app/services/authService/signup';
 
 import { toast } from 'sonner';
-import { useAuth } from '@/app/hooks/useAuth';
+import { sleep } from '@/app/utils/sleep';
 
 const schema = z.object({
   name: z.string().nonempty('Nome é obrigatório'),
@@ -38,15 +40,17 @@ export function useCadastroController() {
       return authService.signup(data);
     },
   });
-
-  const { signin } = useAuth();
+  const navigate = useNavigate();
+  //const { signin } = useAuth();
 
   const handleSubmit = hookFormHandleSubmit(async (data) => {
     try {
       const { accessToken } = await mutateAsync(data);
       console.log({ accessToken });
       toast.success('Usuário cadastrado com sucesso');
-      signin(accessToken);
+      sleep(1500);
+      navigate('login');
+      //signin(accessToken);
     } catch {
       toast.error('Erro ao Criar usuário', {
         action: {

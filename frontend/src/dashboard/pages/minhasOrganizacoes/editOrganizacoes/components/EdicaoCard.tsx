@@ -1,17 +1,14 @@
 import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { useDashboard } from '@/dashboard/DashboardContext/useDashboard';
 
 import { Trash, Pencil } from 'lucide-react';
 import { Sheet, SheetTrigger } from '@/components/ui/sheet';
 import EditFormularioOrganizacao from './EditFormularioOrganizacao';
 import ModalApagarCard from './ModalApagarCard';
 
-interface EdicaoCardProps {
-  idOrganizacao: string;
-  // title: string;
-}
+export default function EdicaoCard() {
+  const { selectedOrganization } = useDashboard();
 
-export default function EdicaoCard({ idOrganizacao }: EdicaoCardProps) {
-  console.log(idOrganizacao);
   return (
     <div>
       <AlertDialog>
@@ -20,7 +17,7 @@ export default function EdicaoCard({ idOrganizacao }: EdicaoCardProps) {
             <Trash />
           </button>
         </AlertDialogTrigger>
-        {<ModalApagarCard idOrganizacao={idOrganizacao} />}
+        {<ModalApagarCard idOrganizacao={selectedOrganization!.id} />}
       </AlertDialog>
 
       <Sheet>
@@ -29,7 +26,7 @@ export default function EdicaoCard({ idOrganizacao }: EdicaoCardProps) {
             <Pencil />
           </button>
         </SheetTrigger>
-        {<EditFormularioOrganizacao />}
+        {<EditFormularioOrganizacao organizacao={selectedOrganization!} />}
       </Sheet>
     </div>
   );

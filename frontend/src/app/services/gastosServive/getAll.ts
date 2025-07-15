@@ -5,8 +5,8 @@ export interface organizationResponse {
   id: string;
   name: string;
   description: string;
-  createdAt: string;
-  //createdAt: '2025-07-13T17:15:08.252Z'
+
+  //"createdAt": "2025-07-13T17:15:08.252Z"
   ownerId: string;
   groupUser: Array<{
     permission: permissionMember;
