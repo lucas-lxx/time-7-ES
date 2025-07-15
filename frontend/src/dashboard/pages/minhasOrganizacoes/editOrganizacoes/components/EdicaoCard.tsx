@@ -6,9 +6,26 @@ import { Sheet, SheetTrigger } from '@/components/ui/sheet';
 import EditFormularioOrganizacao from './EditFormularioOrganizacao';
 import ModalApagarCard from './ModalApagarCard';
 
-export default function EdicaoCard() {
+interface EdicaoCardProp {
+  id: string;
+}
+
+export default function EdicaoCard({ id }: EdicaoCardProp) {
   const { selectedOrganization } = useDashboard();
 
+  if (!selectedOrganization) {
+    return (
+      <div>
+        <button>
+          <Trash />
+        </button>
+
+        <button>
+          <Pencil />
+        </button>
+      </div>
+    );
+  }
   return (
     <div>
       <AlertDialog>
@@ -17,7 +34,7 @@ export default function EdicaoCard() {
             <Trash />
           </button>
         </AlertDialogTrigger>
-        {<ModalApagarCard idOrganizacao={selectedOrganization!.id} />}
+        {<ModalApagarCard idOrganizacao={id} />}
       </AlertDialog>
 
       <Sheet>

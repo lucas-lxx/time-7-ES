@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { organizationService } from '@/app/services/organizationService';
 import { type organizationParams } from '@/app/services/organizationService/create';
+import { type objectMember } from '@/app/services/organizationService/create';
+import { type groupUserType } from '@/app/services/organizationService/getAll';
 
 const schema = z.object({
   name: z
@@ -16,11 +18,6 @@ const schema = z.object({
 });
 
 type FormData = z.infer<typeof schema>;
-
-export type objectMember = {
-  userEmail: string;
-  permission: 'EDIT' | 'VIEW';
-};
 
 export function useOrganizacaoController() {
   const [members, setMembers] = useState<objectMember[]>([]);
@@ -78,12 +75,23 @@ export function useOrganizacaoController() {
     }
   });
 
+  const preencherEmailFormulario = (groupUser: groupUserType[]) => {
+    const convertedMembers: objectMember[] = groupUser.map((item) => ({
+      userEmail: item.User.email,
+      permission: item.permission,
+    }));
+
+    setMembers(convertedMembers);
+  };
+
   return {
     handleSubmit,
     register,
     errors,
     isLoading,
+    reset,
 
+    preencherEmailFormulario,
     members,
     email,
     setEmail,

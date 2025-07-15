@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Button } from '@/autenticacao/components/Button';
 import { Input } from '@/autenticacao/components/Input';
 import { TextArea } from '@/autenticacao/components/TextArea';
@@ -29,13 +30,24 @@ export default function EditFormularioOrganizacao({
     register,
     errors,
     isLoading,
+    reset,
 
+    preencherEmailFormulario,
     members,
     email,
     setEmail,
     handleAddMember,
     handleRemoveMember,
   } = useOrganizacaoController();
+
+  useEffect(() => {
+    reset({
+      name: organizacao.name,
+      description: organizacao.description,
+    });
+
+    preencherEmailFormulario(organizacao.groupUser);
+  }, [organizacao, reset]);
 
   return (
     <SheetContent className='md:min-w-[40%] lg:min-w-[30%] max-sm:w-auto'>

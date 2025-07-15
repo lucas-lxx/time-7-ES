@@ -1,9 +1,8 @@
 import { httpClient } from '../httpClient';
-import { sleep } from '../../utils/sleep';
 
 export type permissionMember = 'EDIT' | 'VIEW';
 
-type objectMember = {
+export type objectMember = {
   userEmail: string;
   permission: permissionMember;
 };
@@ -15,7 +14,7 @@ export interface organizationParams {
 }
 
 export async function create(params: organizationParams) {
-  await sleep(1000);
+  //await sleep(1000);
   const { data } = await httpClient.post('/group', params);
 
   return data;

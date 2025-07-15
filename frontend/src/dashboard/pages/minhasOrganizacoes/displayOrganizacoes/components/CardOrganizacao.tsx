@@ -41,7 +41,7 @@ export default function CardOrganizacao({ organizacao }: CardOrganizacaoProps) {
 
       <CardFooter className='text-xs text-gray-500'>
         Criado em {dataFormatada}
-        <EdicaoCard />
+        <EdicaoCard id={organizacao.id} />
       </CardFooter>
     </Card>
   );
