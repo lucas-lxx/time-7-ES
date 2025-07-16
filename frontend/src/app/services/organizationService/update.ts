@@ -13,9 +13,7 @@ export interface organizationParams {
   members?: Array<objectMember> | undefined;
 }
 
-export async function create(params: organizationParams) {
-  //await sleep(1000);
-  const { data } = await httpClient.post('/group', params);
-
+export async function update(id: string, params: Partial<organizationParams>) {
+  const { data } = await httpClient.patch(`/group/${id}`, params);
   return data;
 }

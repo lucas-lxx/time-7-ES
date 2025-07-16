@@ -24,9 +24,11 @@ export default function CardOrganizacao({ organizacao }: CardOrganizacaoProps) {
 
   return (
     <Card
-      className='w-60 h-86 {/*bg-blue-900*/} shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-sm pt-2 cursor-pointer'
+      className='group w-60 h-86 relative shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-sm pt-2 cursor-pointer'
       onClick={() => selectOrganization(organizacao)}
     >
+      {/* Botões flutuando no canto superior direito */}
+      <EdicaoCard id={organizacao.id} />
       <CardContent className=''>
         <img
           src='../../../cardImage.svg'
@@ -41,7 +43,6 @@ export default function CardOrganizacao({ organizacao }: CardOrganizacaoProps) {
 
       <CardFooter className='text-xs text-gray-500'>
         Criado em {dataFormatada}
-        <EdicaoCard />
       </CardFooter>
     </Card>
   );

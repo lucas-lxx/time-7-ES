@@ -1,6 +1,6 @@
 import { CircleX } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { type objectMember } from '../../controller/useOrganizacaoController';
+import { type objectMember } from '@/app/services/organizationService/create.ts';
 
 interface MemberScrollAreaProps {
   members: objectMember[];

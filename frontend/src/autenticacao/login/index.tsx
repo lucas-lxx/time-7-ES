@@ -34,13 +34,17 @@ export default function Login() {
         </Button>
       </form>
 
-      <div className='flex flex-col items-center gap-2 mt-4'>
+      <div className='flex flex-col items-center gap-2 mt-4 text-center'>
         <Link to='/recuperacao' className='text-cor-secundaria'>
           Esqueci minha senha
         </Link>
         <p>
           Não possui conta?{' '}
-          <Link to='/' className='text-cor-secundaria'>
+          <Link
+            to='/'
+            className='text-cor-secundaria whitespace-nowrap
+'
+          >
             Cadastre-se
           </Link>
         </p>
